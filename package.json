@@ -1,0 +1,19 @@
+{
+  "name": "unifor-express-api",
+  "version": "1.0.0",
+  "description": "API REST em express para atividade final da cadeira de Desenvolvimento Web",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jonathas Rodrigues",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  }
+}
