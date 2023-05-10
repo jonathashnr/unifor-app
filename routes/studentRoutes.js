@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const { BadRequestError } = require("../middlewares/httpErrors");
 
 router.get("/", (req, res) => {
     res.json({ message: "Aqui vão todos os estudantes" });
@@ -10,9 +11,16 @@ router.get("/:id", (req, res) => {
 });
 
 router.post("/", (req, res) => {
-    res.json({
-        message: `Aqui cria um novo cadastro com: ${JSON.stringify(req.body)}`,
-    });
+    const { name, email } = req.body;
+    if (!name || !email) {
+        throw new BadRequestError("O campo de nome e email são necessários.");
+    } else {
+        res.json({
+            message: `Aqui cria um novo cadastro com: ${JSON.stringify(
+                req.body
+            )}`,
+        });
+    }
 });
 
 router.put("/", (req, res) => {
