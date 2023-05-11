@@ -10,12 +10,10 @@ const {
 
 router.get("/", getAllStudents);
 
-router.get("/:id", getStudentById);
+router.get("/:id", getStudentById).delete(deleteStudent);
 
 router.post("/", postStudent);
 
 router.put("/", putStudent);
-
-router.delete("/:id", deleteStudent);
 
 module.exports = router;
