@@ -1,5 +1,5 @@
 {
-    "name": "unifor-express-api",
+    "name": "server",
     "version": "1.0.0",
     "description": "API REST em express para atividade final da cadeira de Desenvolvimento Web",
     "main": "server.js",
