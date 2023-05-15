@@ -54,6 +54,13 @@ const StudentSchema = new mongoose.Schema(
     { timestamps: true }
 );
 
+StudentSchema.methods.toJSON = function () {
+    var obj = this.toObject();
+    delete obj.password;
+    delete obj.__v;
+    return obj;
+};
+
 StudentSchema.pre("save", async function (next) {
     if (this.isModified("password") || this.isNew) {
         try {
