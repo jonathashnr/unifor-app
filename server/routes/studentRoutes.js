@@ -7,15 +7,12 @@ const {
     putStudent,
     deleteStudent,
 } = require("../controllers/studentControllers.js");
+const authenticateToken = require("../middlewares/authenticationHandler.js");
 
-router.get("/", getAllStudents);
-
-router.get("/:id", getStudentById);
-
-router.post("/", postStudent);
-
-router.put("/", putStudent);
-
-router.delete("/:id", deleteStudent);
+router.get("/", authenticateToken, getAllStudents);
+router.get("/:id", authenticateToken, getStudentById);
+router.post("/", authenticateToken, postStudent);
+router.put("/", authenticateToken, putStudent);
+router.delete("/:id", authenticateToken, deleteStudent);
 
 module.exports = router;

@@ -7,16 +7,38 @@
 
 ---
 
-### Schema incial
+### Modelagem da aplicação
 
-Pode ser mudado, mas já que o professor quer que façamos data visualisation, removi dados que não são significativos (que não temos como comparar com nada, tipo matricula e telefone) e adicionei alguns significativos, como genero e data de nascimento, assim podemos dividir os alunos por genero, idade e curso e fazer graficos comparativos no dashboard.
+O app consiste em um _client_ que funciona de front-end e um _server_ que é uma API Rest. Através da API é possível registrar e logar um **administrador** que tem permissão para fazer CRUD completo no registro dos **estudantes**. O fluxo de uso do app deve ser simples: Chega na landing page, clica no link para registrar um novo administrador, faz log on com a conta de administrador recem criada e com isso tem acesso a "Tela de Administração", onde é possível ver uma lista dos estudantes com gráficos baseados nessa lista, além de poder criar novos registros e deletar/editar os já existentes.
 
--   fullname (String, required): Nome completo, podemos dividir em dois campos.
--   email (String, required, unique): Vai nos servir de username, tem que ser único.
--   password (String, required): Senha da conta.
--   dateOfBirth (Date, required): Podemos usar para derivar a idade e dividir os estudantes em grupos etários.
--   gender(String, required): Gênero pode ser um dos dados que podemos utilizar para fazer os gráficos, junto com o curso.
--   degree (String, required): Vamos fornecer uma lista pre-definida de cursos possíveis, inicialmente teremos ADS, Marketing e Direito.
--   isAdmin (Boolean, internal): Não precisa ser recolhido no registro, mas todos os registros feitos através do cadastro serão administradores e todos criados por um usuário já cadastrado não serão. A ideia é que admins só podem editar/deletar estudantes não admins.
--   createdAt(Timestamp, internal): mongoose cuida de criar as timestamps.
--   updatedAt(Timestamp, internal)
+---
+
+### Documentação da API
+
+#### Coleção admins
+
+-   Schema:
+    -   username (String, _required, unique_)
+    -   email (String, _required, unique_)
+    -   password (String, _required_)
+-   Rotas:
+    -   /admin/register/ - (POST, _public_) - registra um novo administrador.
+    -   /admin/login/ - (POST, _public_) - loga com um administrador
+    -   /admin/current/ - (GET, _private_) - retorna info básica sobre o administrador logado.
+
+#### Coleção students
+
+-   Schema:
+    -   fullname (String, required)
+    -   email (String, required, unique)
+    -   dateOfBirth (Date, required)
+    -   gender(String, required)
+    -   degree (String, required)
+    -   createdAt(Timestamp)
+    -   updatedAt(Timestamp)
+-   Rotas:
+    -   /student/ - (GET, _private_) - retorna todos os estudantes.
+    -   /student/:id - (GET, _private_) - retorna um estudante por id.
+    -   /student/ - (POST, _private_) - cria um novo registro de estudante.
+    -   /student/:id - (PUT, _private_) - edita um registro de estudante.
+    -   /student/:id - (DELETE, _private_) - edita um registro de estudante.
