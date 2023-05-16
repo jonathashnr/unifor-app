@@ -14,6 +14,14 @@ class UnauthorizedError extends Error {
     }
 }
 
+class ForbiddenError extends Error {
+    constructor(message = "Proibido") {
+        super(message);
+        this.title = "Erro de Autorização";
+        this.statusCode = 403;
+    }
+}
+
 class NotFoundError extends Error {
     constructor(message = "Não encontrado") {
         super(message);
@@ -33,6 +41,7 @@ class InternalServerError extends Error {
 module.exports = {
     BadRequestError,
     UnauthorizedError,
+    ForbiddenError,
     NotFoundError,
     InternalServerError,
 };

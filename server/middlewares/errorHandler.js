@@ -1,6 +1,7 @@
 const {
     BadRequestError,
     UnauthorizedError,
+    ForbiddenError,
     NotFoundError,
     InternalServerError,
 } = require("./httpErrors.js");
@@ -9,6 +10,7 @@ const errorHandler = (err, req, res, next) => {
     if (
         err instanceof BadRequestError ||
         err instanceof UnauthorizedError ||
+        err instanceof ForbiddenError ||
         err instanceof NotFoundError ||
         err instanceof InternalServerError
     ) {
