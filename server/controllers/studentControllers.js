@@ -54,8 +54,7 @@ const postStudent = asyncHandler(async (req, res) => {
     }
 });
 
-// Vou deixar para implementar os controladores de editar
-// e deletar depois de implementar autenticação e registro.
+// Falta implementar esse.
 const putStudent = asyncHandler(async (req, res) => {
     res.json({
         message: `Aqui atualiza um cadastro com: ${JSON.stringify(req.body)}`,
@@ -63,7 +62,15 @@ const putStudent = asyncHandler(async (req, res) => {
 });
 
 const deleteStudent = asyncHandler(async (req, res) => {
-    res.json({ message: `Aqui deleta o estudante de id: ${req.params.id}` });
+    if (req.params.id && !isMongoId(req.params.id)) {
+        throw new BadRequestError("Id ausente ou inválido.");
+    }
+    const student = await Students.findById(req.params.id);
+    if (!student) {
+        throw new NotFoundError("Estudante não encontrado.");
+    }
+    const deletedStudent = await Students.deleteOne({ _id: req.params.id });
+    res.json(deletedStudent);
 });
 
 module.exports = {
