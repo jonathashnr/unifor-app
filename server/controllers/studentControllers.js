@@ -7,6 +7,21 @@ const {
     NotFoundError,
 } = require("../middlewares/httpErrors");
 
+const mongooseSaveErrorHander = (err) => {
+    if (err.name === "ValidationError") {
+        const nestedErrorsArray = Object.values(err.errors);
+        const errorMessagesArray = nestedErrorsArray.map((e) => {
+            if (e.name === "CastError") {
+                return `Tipo inválido para o campo ${e.path}`;
+            }
+            return e.message;
+        });
+        throw new BadRequestError(errorMessagesArray.join("; ") + ".");
+    } else {
+        throw new InternalServerError("Erro interno do servidor.");
+    }
+};
+
 const getAllStudents = asyncHandler(async (req, res) => {
     // Limitando a 300 estudantes
     const allStudents = await Students.find().limit(300);
@@ -35,18 +50,7 @@ const postStudent = asyncHandler(async (req, res) => {
         res.status(201).json(savedStudent);
     } catch (err) {
         // Trata os erros lançados pelo mongoose e passa para nosso middleware
-        if (err.name === "ValidationError") {
-            const nestedErrorsArray = Object.values(err.errors);
-            const errorMessagesArray = nestedErrorsArray.map((e) => {
-                if (e.name === "CastError") {
-                    return `Tipo inválido para o campo ${e.path}`;
-                }
-                return e.message;
-            });
-            throw new BadRequestError(errorMessagesArray.join("; ") + ".");
-        } else {
-            throw new InternalServerError("Erro interno do servidor.");
-        }
+        mongooseSaveErrorHander(err);
     }
 });
 
@@ -68,4 +72,5 @@ module.exports = {
     postStudent,
     putStudent,
     deleteStudent,
+    mongooseSaveErrorHander,
 };
