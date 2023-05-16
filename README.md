@@ -37,8 +37,8 @@ O app consiste em um _client_ que funciona de front-end e um _server_ que é uma
     -   createdAt(Timestamp)
     -   updatedAt(Timestamp)
 -   Rotas:
-    -   /students/ - (GET, _private_) - retorna todos os estudantes.
-    -   /students/:id - (GET, _private_) - retorna um estudante por id.
-    -   /students/ - (POST, _private_) - cria um novo registro de estudante.
-    -   /students/:id - (PUT, _private_) - edita um registro de estudante.
-    -   /students/:id - (DELETE, _private_) - edita um registro de estudante.
+    -   /student/ - (GET, _private_) - retorna todos os estudantes.
+    -   /student/:id - (GET, _private_) - retorna um estudante por id.
+    -   /student/ - (POST, _private_) - cria um novo registro de estudante.
+    -   /student/:id - (PUT, _private_) - edita um registro de estudante.
+    -   /student/:id - (DELETE, _private_) - edita um registro de estudante.
