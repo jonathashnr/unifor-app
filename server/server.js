@@ -12,7 +12,7 @@ connectDb();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
-app.use("/students", studentRoutes);
+app.use("/student", studentRoutes);
 app.use("/admin", adminRoutes);
 
 app.get("/", (req, res) => res.send("Api ativa"));
