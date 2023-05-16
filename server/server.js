@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const studentRoutes = require("./routes/studentRoutes.js");
-const userRoutes = require("./routes/userRoutes.js");
+const adminRoutes = require("./routes/adminRoutes.js");
 const errorHandler = require("./middlewares/errorHandler.js");
 const connectDb = require("./config/dbConnection.js");
 require("dotenv").config({ path: "../.env" });
@@ -13,7 +13,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use("/students", studentRoutes);
-app.use("/user", userRoutes);
+app.use("/admin", adminRoutes);
 
 app.get("/", (req, res) => res.send("Api ativa"));
 
