@@ -37,7 +37,8 @@ const loginUser = asyncHandler(async (req, res) => {
 });
 
 const currentUser = asyncHandler(async (req, res) => {
-    res.json({ message: "Info sobre o usuário logado." });
+    const user = req.user;
+    res.json({ user });
 });
 
 module.exports = {
