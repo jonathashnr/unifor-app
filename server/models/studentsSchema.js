@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
-const { isEmail, isStrongPassword } = require("validator");
+const { isEmail } = require("validator");
 const { DEGREES, GENDERS } = require("../../constants.js");
 
 const StudentSchema = new mongoose.Schema(
@@ -16,14 +16,6 @@ const StudentSchema = new mongoose.Schema(
             validate: {
                 validator: isEmail,
                 message: "Email inválido",
-            },
-        },
-        password: {
-            type: String,
-            required: [true, "Falta o campo senha"],
-            validate: {
-                validator: isStrongPassword,
-                message: "Senha fraca",
             },
         },
         dateOfBirth: {
@@ -46,33 +38,14 @@ const StudentSchema = new mongoose.Schema(
                 message: "Curso inválido",
             },
         },
-        isAdmin: {
-            type: Boolean,
-            default: false,
-        },
     },
     { timestamps: true }
 );
 
 StudentSchema.methods.toJSON = function () {
     var obj = this.toObject();
-    delete obj.password;
     delete obj.__v;
     return obj;
 };
-
-StudentSchema.pre("save", async function (next) {
-    if (this.isModified("password") || this.isNew) {
-        try {
-            const hash = await bcrypt.hash(this.password, 10);
-            this.password = hash;
-            next();
-        } catch (err) {
-            next(err);
-        }
-    } else {
-        next();
-    }
-});
 
 module.exports = mongoose.model("Students", StudentSchema);
