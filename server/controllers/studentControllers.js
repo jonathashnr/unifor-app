@@ -1,10 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const Students = require("../models/studentsSchema");
 const { isMongoId } = require("validator");
-const {
-    BadRequestError,
-    NotFoundError,
-} = require("../middlewares/httpErrors");
+const { BadRequestError, NotFoundError } = require("../middlewares/httpErrors");
 
 //
 // Helpers
@@ -71,11 +68,22 @@ const postStudent = asyncHandler(async (req, res) => {
     }
 });
 
-// Falta implementar esse.
 const putStudent = asyncHandler(async (req, res) => {
-    res.json({
-        message: `Aqui atualiza um cadastro com: ${JSON.stringify(req.body)}`,
+    const student = await verifiedStudent(req.params.id);
+    const { fullname, email, dateOfBirth, gender, degree } = req.body;
+    const validFields = { fullname, email, dateOfBirth, gender, degree };
+    // Garante que só os campos não nulos são adicionados ao registro do estudante
+    Object.keys(validFields).forEach((key) => {
+        if (validFields[key]) {
+            student[key] = validFields[key];
+        }
     });
+    try {
+        await student.save();
+        res.status(200).json(student);
+    } catch (err) {
+        mongooseSaveErrorHander(err);
+    }
 });
 
 const deleteStudent = asyncHandler(async (req, res) => {
