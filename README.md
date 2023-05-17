@@ -22,9 +22,9 @@ O app consiste em um _client_ que funciona de front-end e um _server_ que é uma
     -   email (String, _required, unique_)
     -   password (String, _required_)
 -   Rotas:
-    -   /admin/register/ - (POST, _public_) - registra um novo administrador.
-    -   /admin/login/ - (POST, _public_) - loga com um administrador
-    -   /admin/current/ - (GET, _private_) - retorna info básica sobre o administrador logado.
+    -   `/admin/register/` - (POST, _public_) - registra um novo administrador.
+    -   `/admin/login/` - (POST, _public_) - loga com um administrador
+    -   `/admin/current/` - (GET, _private_) - retorna info básica sobre o administrador logado.
 
 #### Coleção students
 
@@ -37,8 +37,8 @@ O app consiste em um _client_ que funciona de front-end e um _server_ que é uma
     -   createdAt(Timestamp)
     -   updatedAt(Timestamp)
 -   Rotas:
-    -   /student/ - (GET, _private_) - retorna todos os estudantes.
-    -   /student/:id - (GET, _private_) - retorna um estudante por id.
-    -   /student/ - (POST, _private_) - cria um novo registro de estudante.
-    -   /student/:id - (PUT, _private_) - edita um registro de estudante.
-    -   /student/:id - (DELETE, _private_) - edita um registro de estudante.
+    -   `/student/` - (GET, _private_) - retorna todos os estudantes.
+    -   `/student/:id` - (GET, _private_) - retorna um estudante por id.
+    -   `/student/` - (POST, _private_) - cria um novo registro de estudante.
+    -   `/student/:id` - (PUT, _private_) - edita um registro de estudante.
+    -   `/student/:id` - (DELETE, _private_) - deleta um registro de estudante (retorna status 204 em sucesso).
