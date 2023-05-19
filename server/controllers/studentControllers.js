@@ -1,12 +1,11 @@
 const asyncHandler = require("express-async-handler");
 const Students = require("../models/studentsSchema");
 const { isMongoId } = require("validator");
-const {
-    BadRequestError,
-    InternalServerError,
-    NotFoundError,
-} = require("../middlewares/httpErrors");
+const { BadRequestError, NotFoundError } = require("../middlewares/httpErrors");
 
+//
+// Helpers
+//
 const mongooseSaveErrorHander = (err) => {
     if (err.name === "ValidationError") {
         const nestedErrorsArray = Object.values(err.errors);
@@ -18,10 +17,24 @@ const mongooseSaveErrorHander = (err) => {
         });
         throw new BadRequestError(errorMessagesArray.join("; ") + ".");
     } else {
-        throw new InternalServerError("Erro interno do servidor.");
+        throw err;
     }
 };
 
+const verifiedStudent = async (id) => {
+    if (!isMongoId(id)) {
+        throw new BadRequestError("Id ausente ou inválido.");
+    }
+    const student = await Students.findById(id);
+    if (!student) {
+        throw new NotFoundError("Estudante não encontrado.");
+    }
+    return student;
+};
+
+//
+// Controllers
+//
 const getAllStudents = asyncHandler(async (req, res) => {
     // Limitando a 300 estudantes
     const allStudents = await Students.find().limit(300);
@@ -29,23 +42,24 @@ const getAllStudents = asyncHandler(async (req, res) => {
 });
 
 const getStudentById = asyncHandler(async (req, res) => {
-    if (!isMongoId(req.params.id)) {
-        throw new BadRequestError("MongoId inválido.");
-    }
-    const student = await Students.findById(req.params.id);
-    if (!student) {
-        throw new NotFoundError("Estudante não encontrado.");
-    }
+    const student = await verifiedStudent(req.params.id);
     res.json(student);
 });
 
 const postStudent = asyncHandler(async (req, res) => {
-    const existingStudent = await Students.findOne({ email: req.body.email });
+    const { fullname, email, dateOfBirth, gender, degree } = req.body;
+    const existingStudent = await Students.findOne({ email });
     if (existingStudent) {
         throw new BadRequestError("Email já está em uso.");
     }
     try {
-        const newStudent = new Students(req.body);
+        const newStudent = new Students({
+            fullname,
+            email,
+            dateOfBirth,
+            gender,
+            degree,
+        });
         const savedStudent = await newStudent.save();
         res.status(201).json(savedStudent);
     } catch (err) {
@@ -54,23 +68,28 @@ const postStudent = asyncHandler(async (req, res) => {
     }
 });
 
-// Falta implementar esse.
 const putStudent = asyncHandler(async (req, res) => {
-    res.json({
-        message: `Aqui atualiza um cadastro com: ${JSON.stringify(req.body)}`,
+    const student = await verifiedStudent(req.params.id);
+    const { fullname, email, dateOfBirth, gender, degree } = req.body;
+    const validFields = { fullname, email, dateOfBirth, gender, degree };
+    // Garante que só os campos não nulos são adicionados ao registro do estudante
+    Object.keys(validFields).forEach((key) => {
+        if (validFields[key]) {
+            student[key] = validFields[key];
+        }
     });
+    try {
+        await student.save();
+        res.status(200).json(student);
+    } catch (err) {
+        mongooseSaveErrorHander(err);
+    }
 });
 
 const deleteStudent = asyncHandler(async (req, res) => {
-    if (req.params.id && !isMongoId(req.params.id)) {
-        throw new BadRequestError("Id ausente ou inválido.");
-    }
-    const student = await Students.findById(req.params.id);
-    if (!student) {
-        throw new NotFoundError("Estudante não encontrado.");
-    }
-    const deletedStudent = await Students.deleteOne({ _id: req.params.id });
-    res.json(deletedStudent);
+    const student = await verifiedStudent(req.params.id);
+    await student.deleteOne();
+    res.status(204).end();
 });
 
 module.exports = {
