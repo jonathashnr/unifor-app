@@ -1,0 +1,28 @@
+#table {
+    border: 1px solid;
+    border-collapse: collapse;
+}
+
+th {
+    border: 1px solid;
+    padding: 5px;
+}
+
+td {
+    border: 1px solid;
+    background-color: aliceblue;
+    padding: 5px;
+}
+
+/* tbody tr {
+    display: none;
+    width: 100%;
+}
+
+tbody tr:nth-child(1) {
+    display: block;
+    width: 100%;
+}
+tbody tr:nth-child(2) {
+    display: block;
+} */
