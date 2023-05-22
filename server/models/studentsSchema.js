@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const bcrypt = require("bcrypt");
 const { isEmail } = require("validator");
 const { DEGREES, GENDERS } = require("../../constants.js");
 

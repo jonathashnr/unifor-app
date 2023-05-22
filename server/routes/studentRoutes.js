@@ -12,7 +12,7 @@ const authenticateToken = require("../middlewares/authenticationHandler.js");
 router.get("/", authenticateToken, getAllStudents);
 router.get("/:id", authenticateToken, getStudentById);
 router.post("/", authenticateToken, postStudent);
-router.put("/", authenticateToken, putStudent);
+router.put("/:id", authenticateToken, putStudent);
 router.delete("/:id", authenticateToken, deleteStudent);
 
 module.exports = router;
