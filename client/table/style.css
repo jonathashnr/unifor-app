@@ -14,15 +14,10 @@ td {
     padding: 5px;
 }
 
-/* tbody tr {
+tbody tr {
     display: none;
-    width: 100%;
 }
 
-tbody tr:nth-child(1) {
-    display: block;
-    width: 100%;
+tbody tr:nth-child(n + 1):nth-child(-n + 20) {
+    display: table-row;
 }
-tbody tr:nth-child(2) {
-    display: block;
-} */
