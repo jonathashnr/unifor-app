@@ -23,7 +23,14 @@
             Entrar
         </button>
         <!-- Botão de Cadastro -->
-        <button type="button" class="btn btn-outline-success">Cadastrar</button>
+        <button
+            type="button"
+            class="btn btn-outline-success"
+            data-bs-toggle="modal"
+            data-bs-target="#registerModal"
+        >
+            Cadastrar
+        </button>
         <!-- Modal de Login -->
         <div
             class="modal fade"
@@ -45,10 +52,61 @@
                             aria-label="Close"
                         ></button>
                     </div>
-                    <div class="modal-body">...</div>
+                    <div class="modal-body">
+                        <p>
+                            Não tem cadastro ainda?
+                            <a
+                                href="#"
+                                data-bs-target="#registerModal"
+                                data-bs-toggle="modal"
+                                >Clique aqui</a
+                            >.
+                        </p>
+                    </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-success">
                             Entrar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal de Cadastro -->
+        <div
+            class="modal fade"
+            id="registerModal"
+            tabindex="-1"
+            aria-labelledby="loginModalLabel"
+            aria-hidden="true"
+        >
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="loginModalLabel">
+                            Cadastre-se
+                        </h1>
+                        <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                        ></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>
+                            Já é cadastrado?
+                            <a
+                                href="#"
+                                data-bs-target="#loginModal"
+                                data-bs-toggle="modal"
+                                >Clique aqui</a
+                            >.
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-success">
+                            Cadastrar
                         </button>
                     </div>
                 </div>
