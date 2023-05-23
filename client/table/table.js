@@ -13,10 +13,9 @@ function displayStudents() {
         let data = res.data
 
         for (let i = 0; i <= data.length; i++) {   
-            const total = i + 1 
-            const date = data[i].dateOfBirth
+            const total = i + 1
 
-            let timestamp = new Date(date)
+            let timestamp = new Date(data[i].dateOfBirth)
             timestamp = new Date(timestamp.getTime() + timestamp.getTimezoneOffset() * 60000)
             const result = timestamp.toLocaleDateString('pt-BR', {
                 year: 'numeric',
