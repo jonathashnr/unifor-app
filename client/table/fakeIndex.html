@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Fake Landing Page</title>
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+            crossorigin="anonymous"
+        />
+    </head>
+    <body>
+        <!-- Botão de Login -->
+        <button
+            type="button"
+            class="btn btn-success"
+            data-bs-toggle="modal"
+            data-bs-target="#loginModal"
+        >
+            Entrar
+        </button>
+        <!-- Botão de Cadastro -->
+        <button
+            type="button"
+            class="btn btn-outline-success"
+            data-bs-toggle="modal"
+            data-bs-target="#signupModal"
+        >
+            Cadastrar
+        </button>
+        <!-- Modal de Login -->
+        <div
+            class="modal fade"
+            id="loginModal"
+            tabindex="-1"
+            aria-labelledby="loginModalLabel"
+            aria-hidden="true"
+        >
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-4" id="loginModalLabel">
+                            Entrar
+                        </h1>
+                        <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Fechar"
+                        ></button>
+                    </div>
+                    <div class="modal-body">
+                        <form
+                            id="loginForm"
+                            class="needs-validation"
+                            novalidate
+                        >
+                            <div class="mb-3">
+                                <label for="loginEmail" class="form-label"
+                                    >Email:</label
+                                >
+                                <input
+                                    type="email"
+                                    name="email"
+                                    class="form-control"
+                                    id="loginEmail"
+                                    required
+                                />
+                                <div class="invalid-feedback">
+                                    Email inválido.
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label
+                                    for="loginPassword"
+                                    class="form-label"
+                                    >Senha:</label
+                                >
+                                <input
+                                    type="password"
+                                    name="password"
+                                    class="form-control"
+                                    id="loginPassword"
+                                    required
+                                />
+                                <div class="invalid-feedback">
+                                    A senha não pode estar vazia.
+                                </div>
+                            </div>
+                            <button
+                                type="submit"
+                                class="btn btn-success"
+                                form="loginForm"
+                            >
+                                Entrar
+                            </button>
+                            <p>
+                                <small>
+                                    Não tem cadastro ainda?
+                                    <a
+                                        href="#signupModal"
+                                        data-bs-toggle="modal"
+                                        >Clique aqui</a
+                                    >.
+                                </small>
+                            </p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal de Cadastro -->
+        <div
+            class="modal fade"
+            id="signupModal"
+            tabindex="-1"
+            aria-labelledby="signupModalLabel"
+            aria-hidden="true"
+        >
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="signupModalLabel">
+                            Cadastre-se
+                        </h1>
+                        <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Fechar"
+                        ></button>
+                    </div>
+                    <div class="modal-body">
+                        <form
+                            id="signupForm"
+                            class="needs-validation"
+                            novalidate
+                        >
+                            <div class="mb-3">
+                                <label
+                                    for="signupEmail"
+                                    class="form-label"
+                                    >Email:</label
+                                >
+                                <input
+                                    type="email"
+                                    name="email"
+                                    class="form-control"
+                                    id="signupEmail"
+                                    required
+                                />
+                                <div
+                                    id="signupEmailHelper"
+                                    class="invalid-feedback"
+                                >
+                                    Email inválido.
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label
+                                    for="signupPassword"
+                                    class="form-label"
+                                    >Senha:</label
+                                >
+                                <input
+                                    type="password"
+                                    name="password"
+                                    class="form-control"
+                                    id="signupPassword"
+                                    required
+                                />
+                                <div
+                                    id="signupPasswordHelper"
+                                    class="invalid-feedback"
+                                >
+                                    A senha não pode estar vazia.
+                                </div>
+                            </div>
+                                                        <div class="mb-3">
+                                <label
+                                    for="signupConfirmPassword"
+                                    class="form-label"
+                                    >Confirme a Senha:</label
+                                >
+                                <input
+                                    type="password"
+                                    name="confirmPassword"
+                                    class="form-control"
+                                    id="signupConfirmPassword"
+                                    required
+                                />
+                                <div
+                                    id="signupConfirmPasswordHelper"
+                                    class="invalid-feedback"
+                                >
+                                    A confirmação da senha não pode estar vazia.
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-success">
+                                Cadastrar
+                            </button>
+                            <p>
+                                <small>
+                                    Já é cadastrado?
+                                    <a href="#loginModal" data-bs-toggle="modal"
+                                        >Clique aqui</a
+                                    >.
+                                </small>
+                            </p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal de Erro -->
+        <div
+            class="modal fade"
+            id="errModal"
+            tabindex="-1"
+            aria-labelledby="errModalLabel"
+            aria-hidden="true"
+        >
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1
+                            class="modal-title fs-4 text-danger"
+                            id="errModalLabel"
+                        >
+                            Erro
+                        </h1>
+                        <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                        ></button>
+                    </div>
+                    <div class="modal-body">
+                        <p id="errMessage">Mensagem de Erro</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button
+                            type="button"
+                            class="btn btn-secondary"
+                            data-bs-dismiss="modal"
+                        >
+                            Fechar
+                        </button>
+                        <button
+                            type="button"
+                            id="errModalButton"
+                            class="btn btn-danger"
+                            data-bs-toggle="modal"
+                            data-bs-target="#"
+                        >
+                            Tentar Novamente
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal de Dialog -->
+        <div
+            class="modal fade"
+            id="dialogModal"
+            tabindex="-1"
+            aria-labelledby="dialogModalLabel"
+            aria-hidden="true"
+        >
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1
+                            class="modal-title fs-4 text-success"
+                            id="dialogModalLabel"
+                        >
+                            Sucesso!
+                        </h1>
+                        <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                        ></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>
+                            Sua conta de administrador foi cadastrada com
+                            sucesso!
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button
+                            type="button"
+                            class="btn btn-secondary"
+                            data-bs-dismiss="modal"
+                        >
+                            Fechar
+                        </button>
+                        <button
+                            type="button"
+                            id="dialogModalButton"
+                            class="btn btn-success"
+                            data-bs-toggle="modal"
+                            data-bs-target="#loginModal"
+                        >
+                            Fazer Login
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+        crossorigin="anonymous"
+    ></script>
+    <script type="module" src="fakeIndex.js"></script>
+</html>
