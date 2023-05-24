@@ -13,9 +13,18 @@
         />
     </head>
     <body>
+        <!-- Teste de Login -->
+        <button
+            type="button"
+            id="testLoginButton"
+            class="btn btn-success"
+        >
+            Testando Entrar
+        </button>
         <!-- Botão de Login -->
         <button
             type="button"
+            id="loginButton"
             class="btn btn-success"
             data-bs-toggle="modal"
             data-bs-target="#loginModal"
@@ -30,6 +39,16 @@
             data-bs-target="#registerModal"
         >
             Cadastrar
+        </button>
+        <!-- Botão de Erro -->
+        <button
+            id="errButton"
+            type="button"
+            class="btn btn-danger"
+            data-bs-toggle="modal"
+            data-bs-target="#errModal"
+        >
+            Erro
         </button>
         <!-- Modal de Login -->
         <div
@@ -53,20 +72,61 @@
                         ></button>
                     </div>
                     <div class="modal-body">
-                        <p>
-                            Não tem cadastro ainda?
-                            <a
-                                href="#"
-                                data-bs-target="#registerModal"
-                                data-bs-toggle="modal"
-                                >Clique aqui</a
-                            >.
-                        </p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-success">
-                            Entrar
-                        </button>
+                        <form
+                            id="loginForm"
+                            class="needs-validation"
+                            novalidate
+                        >
+                            <div class="mb-3">
+                                <label for="loginInputEmail" class="form-label"
+                                    >Email:</label
+                                >
+                                <input
+                                    type="email"
+                                    name="email"
+                                    class="form-control"
+                                    id="loginInputEmail"
+                                    required
+                                />
+                                <div class="invalid-feedback">
+                                    Email inválido.
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label
+                                    for="loginInputPassword"
+                                    class="form-label"
+                                    >Senha:</label
+                                >
+                                <input
+                                    type="password"
+                                    name="password"
+                                    class="form-control"
+                                    id="loginInputPassword"
+                                    required
+                                />
+                                <div class="invalid-feedback">
+                                    Password Inválido.
+                                </div>
+                            </div>
+                            <button
+                                type="submit"
+                                class="btn btn-success"
+                                form="loginForm"
+                            >
+                                Entrar
+                            </button>
+                            <p>
+                                <small>
+                                    Não tem cadastro ainda?
+                                    <a
+                                        href="#registerModal"
+                                        data-bs-toggle="modal"
+                                        >Clique aqui</a
+                                    >.
+                                </small>
+                            </p>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -94,28 +154,100 @@
                         ></button>
                     </div>
                     <div class="modal-body">
-                        <p>
-                            Já é cadastrado?
-                            <a
-                                href="#"
-                                data-bs-target="#loginModal"
-                                data-bs-toggle="modal"
-                                >Clique aqui</a
-                            >.
-                        </p>
+                        <form id="registerForm">
+                            <div class="mb-3">
+                                <label
+                                    for="registerInputEmail"
+                                    class="form-label"
+                                    >Email:</label
+                                >
+                                <input
+                                    type="email"
+                                    name="email"
+                                    class="form-control"
+                                    id="registerInputEmail"
+                                />
+                            </div>
+                            <div class="mb-3">
+                                <label
+                                    for="registerInputPassword"
+                                    class="form-label"
+                                    >Senha:</label
+                                >
+                                <input
+                                    type="password"
+                                    name="password"
+                                    class="form-control"
+                                    id="registerInputPassword"
+                                />
+                            </div>
+                            <button type="submit" class="btn btn-success">
+                                Cadastrar
+                            </button>
+                            <p>
+                                <small>
+                                    Já é cadastrado?
+                                    <a href="#loginModal" data-bs-toggle="modal"
+                                        >Clique aqui</a
+                                    >.
+                                </small>
+                            </p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal de Erro -->
+        <div
+            class="modal fade"
+            id="errModal"
+            tabindex="-1"
+            aria-labelledby="errModalLabel"
+            aria-hidden="true"
+        >
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="errModalLabel">
+                            Erro
+                        </h1>
+                        <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                        ></button>
+                    </div>
+                    <div class="modal-body">
+                        <p id="errMessage">Mensagem de Erro</p>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-outline-success">
-                            Cadastrar
+                        <button
+                            type="button"
+                            class="btn btn-secondary"
+                            data-bs-dismiss="modal"
+                        >
+                            Fechar
+                        </button>
+                        <button
+                            type="button"
+                            id="errModalButton"
+                            class="btn btn-danger"
+                            data-bs-toggle="modal"
+                            data-bs-target="#"
+                        >
+                            Tentar Novamente
                         </button>
                     </div>
                 </div>
             </div>
         </div>
     </body>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
         crossorigin="anonymous"
     ></script>
+    <script type="module" src="fakeIndex.js"></script>
 </html>
