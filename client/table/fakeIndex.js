@@ -4,9 +4,8 @@ const signupModal = new bootstrap.Modal("#signupModal", {});
 const errModal = new bootstrap.Modal("#errModal", {});
 const dialogModal = new bootstrap.Modal("#dialogModal", {});
 
-// Função que monta um modal para uma mensagem de erro
-// especifica, "target" é o alvo do retorno para uma nova
-// tentativa
+// Função que prepara o modal de erros para uma mensagem de erro
+// especifica, "target" é o alvo do retorno para uma nova tentativa
 function showErrorDialog(target, title, message) {
     document.getElementById("errModalLabel").innerText = title;
     document.getElementById("errMessage").innerText = message;
@@ -19,7 +18,7 @@ const endpoint = (route) => `http://localhost:3000/admin/${route}`;
 
 // Validação da força da senha
 function passwordStrenghtCheck(password) {
-    let isValid = false;
+    let isStrong = false;
     let errMessage = "";
     if (!password) {
         errMessage = "A senha não pode estar vazia.";
@@ -35,9 +34,9 @@ function passwordStrenghtCheck(password) {
     } else if (password.length < 8) {
         errMessage = "A deve conter pelo menos 8 caracteres.";
     } else {
-        isValid = true;
+        isStrong = true;
     }
-    return [isValid, errMessage];
+    return [isStrong, errMessage];
 }
 
 // Listeners do Formulario de Login
@@ -54,7 +53,7 @@ function loginFormSubmitHandler(event) {
         axios
             .post(endpoint("login"), body)
             .then((res) => {
-                localStorage.setItem("jwtToken", res.data.accessToken);
+                localStorage.setItem("uniScriptToken", res.data.accessToken);
                 window.location.href = "table.html";
             })
             .catch((err) => {
