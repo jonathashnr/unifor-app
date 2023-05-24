@@ -13,14 +13,6 @@
         />
     </head>
     <body>
-        <!-- Teste de Login -->
-        <button
-            type="button"
-            id="testLoginButton"
-            class="btn btn-success"
-        >
-            Testando Entrar
-        </button>
         <!-- Botão de Login -->
         <button
             type="button"
@@ -39,16 +31,6 @@
             data-bs-target="#registerModal"
         >
             Cadastrar
-        </button>
-        <!-- Botão de Erro -->
-        <button
-            id="errButton"
-            type="button"
-            class="btn btn-danger"
-            data-bs-toggle="modal"
-            data-bs-target="#errModal"
-        >
-            Erro
         </button>
         <!-- Modal de Login -->
         <div
@@ -106,7 +88,7 @@
                                     required
                                 />
                                 <div class="invalid-feedback">
-                                    Password Inválido.
+                                    Senha Inválida.
                                 </div>
                             </div>
                             <button
@@ -154,7 +136,11 @@
                         ></button>
                     </div>
                     <div class="modal-body">
-                        <form id="registerForm">
+                        <form
+                            id="registerForm"
+                            class="needs-validation"
+                            novalidate
+                        >
                             <div class="mb-3">
                                 <label
                                     for="registerInputEmail"
@@ -166,7 +152,14 @@
                                     name="email"
                                     class="form-control"
                                     id="registerInputEmail"
+                                    required
                                 />
+                                <div
+                                    id="registerInputEmailFeedback"
+                                    class="invalid-feedback"
+                                >
+                                    Email inválido.
+                                </div>
                             </div>
                             <div class="mb-3">
                                 <label
@@ -179,7 +172,14 @@
                                     name="password"
                                     class="form-control"
                                     id="registerInputPassword"
+                                    required
                                 />
+                                <div
+                                    id="registerInputPasswordFeedback"
+                                    class="invalid-feedback"
+                                >
+                                    Senha inválida.
+                                </div>
                             </div>
                             <button type="submit" class="btn btn-success">
                                 Cadastrar
@@ -208,7 +208,10 @@
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="errModalLabel">
+                        <h1
+                            class="modal-title fs-4 text-danger"
+                            id="errModalLabel"
+                        >
                             Erro
                         </h1>
                         <button
@@ -237,6 +240,57 @@
                             data-bs-target="#"
                         >
                             Tentar Novamente
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal de Dialog -->
+        <div
+            class="modal fade"
+            id="dialogModal"
+            tabindex="-1"
+            aria-labelledby="dialogModalLabel"
+            aria-hidden="true"
+        >
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1
+                            class="modal-title fs-4 text-success"
+                            id="dialogModalLabel"
+                        >
+                            Sucesso!
+                        </h1>
+                        <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                        ></button>
+                    </div>
+                    <div class="modal-body">
+                        <p id="errMessage">
+                            Sua conta de administrador foi cadastrada com
+                            sucesso!
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button
+                            type="button"
+                            class="btn btn-secondary"
+                            data-bs-dismiss="modal"
+                        >
+                            Fechar
+                        </button>
+                        <button
+                            type="button"
+                            id="dialogModalButton"
+                            class="btn btn-success"
+                            data-bs-toggle="modal"
+                            data-bs-target="#loginModal"
+                        >
+                            Fazer Login
                         </button>
                     </div>
                 </div>
