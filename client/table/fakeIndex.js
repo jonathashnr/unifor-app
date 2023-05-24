@@ -1,27 +1,24 @@
-const loginForm = document.getElementById("loginForm");
-const registerForm = document.getElementById("registerForm");
-
 // Define os modais que podem ser manipulados via js
-const loginModalObj = new bootstrap.Modal("#loginModal", {});
-const registerModalObj = new bootstrap.Modal("#registerModal", {});
-const errModalObj = new bootstrap.Modal("#errModal", {});
-const dialogModalObj = new bootstrap.Modal("#dialogModal", {});
+const loginModal = new bootstrap.Modal("#loginModal", {});
+const signupModal = new bootstrap.Modal("#signupModal", {});
+const errModal = new bootstrap.Modal("#errModal", {});
+const dialogModal = new bootstrap.Modal("#dialogModal", {});
 
 // Função que monta um modal para uma mensagem de erro
 // especifica, "target" é o alvo do retorno para uma nova
 // tentativa
-const showErrorDialog = (target, title, message) => {
+function showErrorDialog(target, title, message) {
     document.getElementById("errModalLabel").innerText = title;
     document.getElementById("errMessage").innerText = message;
     document.getElementById("errModalButton").dataset.bsTarget = target;
-    errModalObj.show();
-};
+    errModal.show();
+}
 
 // Helper para URI
 const endpoint = (route) => `http://localhost:3000/admin/${route}`;
 
 // Validação da força da senha
-const passwordStrenghtCheck = (password) => {
+function passwordStrenghtCheck(password) {
     let isValid = false;
     let errMessage = "";
     if (!password) {
@@ -41,89 +38,86 @@ const passwordStrenghtCheck = (password) => {
         isValid = true;
     }
     return [isValid, errMessage];
-};
+}
 
 // Listeners do Formulario de Login
-loginForm.addEventListener(
-    "submit",
-    (event) => {
-        event.preventDefault();
-        event.stopPropagation();
-        loginForm.classList.add("was-validated");
-        if (loginForm.checkValidity()) {
-            const { email, password } = loginForm.elements;
-            const body = { email: email.value, password: password.value };
-            axios
-                .post(endpoint("login"), body)
-                .then((res) => {
-                    localStorage.setItem("jwtToken", res.data.accessToken);
-                    window.location.href = "table.html";
-                })
-                .catch((err) => {
-                    const title = `${err.response.status} - ${err.response.data.title}`;
-                    const message = err.response.data.message;
-                    loginModalObj.hide();
-                    showErrorDialog("#loginModal", title, message);
-                });
-        }
-    },
-    false
-);
+const loginForm = document.getElementById("loginForm");
+loginForm.addEventListener("submit", loginFormSubmitHandler);
+
+function loginFormSubmitHandler(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    loginForm.classList.add("was-validated");
+    if (loginForm.checkValidity()) {
+        const { email, password } = loginForm.elements;
+        const body = { email: email.value, password: password.value };
+        axios
+            .post(endpoint("login"), body)
+            .then((res) => {
+                localStorage.setItem("jwtToken", res.data.accessToken);
+                window.location.href = "table.html";
+            })
+            .catch((err) => {
+                const title = `${err.response.status} - ${err.response.data.title}`;
+                const message = err.response.data.message;
+                loginModal.hide();
+                showErrorDialog("#loginModal", title, message);
+            });
+    }
+}
 
 // Listeners do Formulario de Cadastro
-const registerPassword = document.getElementById("registerInputPassword");
-const registerConfirmPassword = document.getElementById(
-    "registerInputConfirmPassword"
-);
-const passwordEventHandler = (event) => {
-    const [isStrong, errMessage] = passwordStrenghtCheck(
-        registerPassword.value
-    );
-    if (registerPassword.value === registerConfirmPassword.value) {
-        registerConfirmPassword.setCustomValidity("");
+
+// Validação de Password
+const signupPassword = document.getElementById("signupPassword");
+const signupConfirmPassword = document.getElementById("signupConfirmPassword");
+
+signupPassword.addEventListener("input", passwordEventHandler);
+signupConfirmPassword.addEventListener("input", passwordEventHandler);
+
+function passwordEventHandler(event) {
+    const [isStrong, errMessage] = passwordStrenghtCheck(signupPassword.value);
+    if (signupPassword.value === signupConfirmPassword.value) {
+        signupConfirmPassword.setCustomValidity("");
     } else {
-        registerConfirmPassword.setCustomValidity("Inválido");
-        document.getElementById(
-            "registerInputConfirmPasswordFeedback"
-        ).innerText = "Os campos de senha e confirmação estão diferentes.";
+        signupConfirmPassword.setCustomValidity("Inválido");
+        document.getElementById("signupConfirmPasswordHelper").innerText =
+            "Os campos de senha e confirmação estão diferentes.";
     }
     if (isStrong) {
-        registerPassword.setCustomValidity("");
+        signupPassword.setCustomValidity("");
     } else {
-        registerPassword.setCustomValidity("Inválido");
-        document.getElementById("registerInputPasswordFeedback").innerText =
-            errMessage;
+        signupPassword.setCustomValidity("Inválido");
+        document.getElementById("signupPasswordHelper").innerText = errMessage;
     }
-};
-registerPassword.addEventListener("input", passwordEventHandler);
-registerConfirmPassword.addEventListener("input", passwordEventHandler);
+}
 
-registerForm.addEventListener(
-    "submit",
-    (event) => {
-        event.preventDefault();
-        event.stopPropagation();
-        registerForm.classList.add("was-validated");
-        if (registerForm.checkValidity()) {
-            const { email, password } = registerForm.elements;
-            const body = {
-                email: email.value,
-                password: password.value,
-            };
-            axios
-                .post(endpoint("register"), body)
-                .then((res) => {
-                    registerModalObj.hide();
-                    dialogModalObj.show();
-                })
-                .catch((err) => {
-                    event.stopPropagation();
-                    const title = `${err.response.status} - ${err.response.data.title}`;
-                    const message = err.response.data.message;
-                    registerModalObj.hide();
-                    showErrorDialog("#registerModal", title, message);
-                });
-        }
-    },
-    false
-);
+// Submit no formulário de cadastro
+const signupForm = document.getElementById("signupForm");
+signupForm.addEventListener("submit", signupFormSubmitHandler);
+
+function signupFormSubmitHandler(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    signupForm.classList.add("was-validated");
+    if (signupForm.checkValidity()) {
+        const { email, password } = signupForm.elements;
+        const body = {
+            email: email.value,
+            password: password.value,
+        };
+        axios
+            .post(endpoint("register"), body)
+            .then((res) => {
+                signupModal.hide();
+                dialogModal.show();
+            })
+            .catch((err) => {
+                event.stopPropagation();
+                const title = `${err.response.status} - ${err.response.data.title}`;
+                const message = err.response.data.message;
+                signupModal.hide();
+                showErrorDialog("#signupModal", title, message);
+            });
+    }
+}

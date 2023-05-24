@@ -16,7 +16,6 @@
         <!-- Botão de Login -->
         <button
             type="button"
-            id="loginButton"
             class="btn btn-success"
             data-bs-toggle="modal"
             data-bs-target="#loginModal"
@@ -28,7 +27,7 @@
             type="button"
             class="btn btn-outline-success"
             data-bs-toggle="modal"
-            data-bs-target="#registerModal"
+            data-bs-target="#signupModal"
         >
             Cadastrar
         </button>
@@ -43,14 +42,14 @@
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="loginModalLabel">
+                        <h1 class="modal-title fs-4" id="loginModalLabel">
                             Entrar
                         </h1>
                         <button
                             type="button"
                             class="btn-close"
                             data-bs-dismiss="modal"
-                            aria-label="Close"
+                            aria-label="Fechar"
                         ></button>
                     </div>
                     <div class="modal-body">
@@ -60,14 +59,14 @@
                             novalidate
                         >
                             <div class="mb-3">
-                                <label for="loginInputEmail" class="form-label"
+                                <label for="loginEmail" class="form-label"
                                     >Email:</label
                                 >
                                 <input
                                     type="email"
                                     name="email"
                                     class="form-control"
-                                    id="loginInputEmail"
+                                    id="loginEmail"
                                     required
                                 />
                                 <div class="invalid-feedback">
@@ -76,7 +75,7 @@
                             </div>
                             <div class="mb-3">
                                 <label
-                                    for="loginInputPassword"
+                                    for="loginPassword"
                                     class="form-label"
                                     >Senha:</label
                                 >
@@ -84,7 +83,7 @@
                                     type="password"
                                     name="password"
                                     class="form-control"
-                                    id="loginInputPassword"
+                                    id="loginPassword"
                                     required
                                 />
                                 <div class="invalid-feedback">
@@ -102,7 +101,7 @@
                                 <small>
                                     Não tem cadastro ainda?
                                     <a
-                                        href="#registerModal"
+                                        href="#signupModal"
                                         data-bs-toggle="modal"
                                         >Clique aqui</a
                                     >.
@@ -117,33 +116,33 @@
         <!-- Modal de Cadastro -->
         <div
             class="modal fade"
-            id="registerModal"
+            id="signupModal"
             tabindex="-1"
-            aria-labelledby="loginModalLabel"
+            aria-labelledby="signupModalLabel"
             aria-hidden="true"
         >
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="loginModalLabel">
+                        <h1 class="modal-title fs-5" id="signupModalLabel">
                             Cadastre-se
                         </h1>
                         <button
                             type="button"
                             class="btn-close"
                             data-bs-dismiss="modal"
-                            aria-label="Close"
+                            aria-label="Fechar"
                         ></button>
                     </div>
                     <div class="modal-body">
                         <form
-                            id="registerForm"
+                            id="signupForm"
                             class="needs-validation"
                             novalidate
                         >
                             <div class="mb-3">
                                 <label
-                                    for="registerInputEmail"
+                                    for="signupEmail"
                                     class="form-label"
                                     >Email:</label
                                 >
@@ -151,11 +150,11 @@
                                     type="email"
                                     name="email"
                                     class="form-control"
-                                    id="registerInputEmail"
+                                    id="signupEmail"
                                     required
                                 />
                                 <div
-                                    id="registerInputEmailFeedback"
+                                    id="signupEmailHelper"
                                     class="invalid-feedback"
                                 >
                                     Email inválido.
@@ -163,7 +162,7 @@
                             </div>
                             <div class="mb-3">
                                 <label
-                                    for="registerInputPassword"
+                                    for="signupPassword"
                                     class="form-label"
                                     >Senha:</label
                                 >
@@ -171,11 +170,11 @@
                                     type="password"
                                     name="password"
                                     class="form-control"
-                                    id="registerInputPassword"
+                                    id="signupPassword"
                                     required
                                 />
                                 <div
-                                    id="registerInputPasswordFeedback"
+                                    id="signupPasswordHelper"
                                     class="invalid-feedback"
                                 >
                                     A senha não pode estar vazia.
@@ -183,7 +182,7 @@
                             </div>
                                                         <div class="mb-3">
                                 <label
-                                    for="registerInputConfirmPassword"
+                                    for="signupConfirmPassword"
                                     class="form-label"
                                     >Confirme a Senha:</label
                                 >
@@ -191,11 +190,11 @@
                                     type="password"
                                     name="confirmPassword"
                                     class="form-control"
-                                    id="registerInputConfirmPassword"
+                                    id="signupConfirmPassword"
                                     required
                                 />
                                 <div
-                                    id="registerInputConfirmPasswordFeedback"
+                                    id="signupConfirmPasswordHelper"
                                     class="invalid-feedback"
                                 >
                                     A confirmação da senha não pode estar vazia.
@@ -290,7 +289,7 @@
                         ></button>
                     </div>
                     <div class="modal-body">
-                        <p id="errMessage">
+                        <p>
                             Sua conta de administrador foi cadastrada com
                             sucesso!
                         </p>
