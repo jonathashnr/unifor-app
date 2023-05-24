@@ -88,7 +88,7 @@
                                     required
                                 />
                                 <div class="invalid-feedback">
-                                    Senha Inválida.
+                                    A senha não pode estar vazia.
                                 </div>
                             </div>
                             <button
@@ -178,7 +178,27 @@
                                     id="registerInputPasswordFeedback"
                                     class="invalid-feedback"
                                 >
-                                    Senha inválida.
+                                    A senha não pode estar vazia.
+                                </div>
+                            </div>
+                                                        <div class="mb-3">
+                                <label
+                                    for="registerInputConfirmPassword"
+                                    class="form-label"
+                                    >Confirme a Senha:</label
+                                >
+                                <input
+                                    type="password"
+                                    name="confirmPassword"
+                                    class="form-control"
+                                    id="registerInputConfirmPassword"
+                                    required
+                                />
+                                <div
+                                    id="registerInputConfirmPasswordFeedback"
+                                    class="invalid-feedback"
+                                >
+                                    A confirmação da senha não pode estar vazia.
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-success">
