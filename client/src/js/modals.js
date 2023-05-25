@@ -1,3 +1,7 @@
+import "../scss/styles.scss";
+import * as bootstrap from "bootstrap";
+import axios from "axios";
+
 // Define os modais que podem ser manipulados via js
 const loginModal = new bootstrap.Modal("#loginModal", {});
 const signupModal = new bootstrap.Modal("#signupModal", {});
