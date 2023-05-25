@@ -1,3 +1,10 @@
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 #table {
     border: 1px solid;
     border-collapse: collapse;
@@ -20,4 +27,8 @@ tbody tr {
 
 tbody tr:nth-child(n + 1):nth-child(-n + 20) {
     display: table-row;
+}
+
+.deleteIcon {
+    cursor: pointer;
 }
