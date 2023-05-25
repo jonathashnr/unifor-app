@@ -1,3 +1,5 @@
+import axios from "axios";
+
 const accessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoiam9hb0BvdXRsb29rLmNvbSIsImlkIjoiNjQ2NTQ5MWJjZjI5YTc5MjRmZmUwZjk2In0sImlhdCI6MTY4NDk2MzMzMiwiZXhwIjoxNjg1MDUzMzMyfQ.OJNOV6vWj5PZ2ysPO7eLPnT50y5ugAjALvGa3fKvY6Q"
 const url = `http://localhost:3000/student`   
 const authAxios = axios.create({
