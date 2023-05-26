@@ -56,15 +56,17 @@ function passwordStrenghtCheck(password) {
 }
 
 // Listeners do Formulario de Login
-const loginForm = document.getElementById("loginForm");
-loginForm.addEventListener("submit", loginFormSubmitHandler);
+document
+    .getElementById("loginForm")
+    .addEventListener("submit", loginSubmitHandler);
 
-function loginFormSubmitHandler(event) {
+function loginSubmitHandler(event) {
     event.preventDefault();
     event.stopPropagation();
-    loginForm.classList.add("was-validated");
-    if (loginForm.checkValidity()) {
-        const { email, password } = loginForm.elements;
+    const form = event.target;
+    form.classList.add("was-validated");
+    if (form.checkValidity()) {
+        const { email, password } = form.elements;
         const body = { email: email.value, password: password.value };
         axios
             .post(endpoint("login"), body)
@@ -84,13 +86,16 @@ function loginFormSubmitHandler(event) {
 // Listeners do Formulario de Cadastro
 
 // Validação de Email
-const signupEmail = document.getElementById("signupEmail");
-signupEmail.addEventListener("input", emailEventHandler);
-function emailEventHandler(event) {
-    if (isEmail(signupEmail.value)) {
-        signupEmail.setCustomValidity("");
+document
+    .getElementById("signupEmail")
+    .addEventListener("input", emailValidationHandler);
+
+function emailValidationHandler(event) {
+    const email = event.target;
+    if (isEmail(email.value)) {
+        email.setCustomValidity("");
     } else {
-        signupEmail.setCustomValidity("Inválido");
+        email.setCustomValidity("Inválido");
     }
 }
 
@@ -98,10 +103,10 @@ function emailEventHandler(event) {
 const signupPassword = document.getElementById("signupPassword");
 const signupConfirmPassword = document.getElementById("signupConfirmPassword");
 
-signupPassword.addEventListener("input", passwordEventHandler);
-signupConfirmPassword.addEventListener("input", passwordEventHandler);
+signupPassword.addEventListener("input", passValidationHandler);
+signupConfirmPassword.addEventListener("input", passValidationHandler);
 
-function passwordEventHandler(event) {
+function passValidationHandler(event) {
     const [isStrong, errMessage] = passwordStrenghtCheck(signupPassword.value);
     if (signupPassword.value === signupConfirmPassword.value) {
         signupConfirmPassword.setCustomValidity("");
@@ -119,15 +124,17 @@ function passwordEventHandler(event) {
 }
 
 // Submit no formulário de cadastro
-const signupForm = document.getElementById("signupForm");
-signupForm.addEventListener("submit", signupFormSubmitHandler);
+document
+    .getElementById("signupForm")
+    .addEventListener("submit", signupSubmitHandler);
 
-function signupFormSubmitHandler(event) {
+function signupSubmitHandler(event) {
     event.preventDefault();
     event.stopPropagation();
-    signupForm.classList.add("was-validated");
-    if (signupForm.checkValidity()) {
-        const { email, password } = signupForm.elements;
+    const form = event.target;
+    form.classList.add("was-validated");
+    if (form.checkValidity()) {
+        const { email, password } = form.elements;
         const body = {
             email: email.value,
             password: password.value,
@@ -150,6 +157,7 @@ function signupFormSubmitHandler(event) {
 
 // Formulário de adicionar estudantes
 
+// Popula selects com as opções de genero e cursos
 fillSelect(document.getElementById("addStudentGender"), GENDERS);
 fillSelect(document.getElementById("addStudentDegree"), DEGREES);
 function fillSelect(selectElement, optionsArr) {
@@ -162,18 +170,19 @@ function fillSelect(selectElement, optionsArr) {
 }
 
 // Submit no formulário de cadastro
-const addStudentForm = document.getElementById("addStudentForm");
-addStudentForm.addEventListener("submit", addStudentFormSubmitHandler);
+document
+    .getElementById("addStudentForm")
+    .addEventListener("submit", addStudentSubmitHandler);
 
-function addStudentFormSubmitHandler(event) {
-    const { fullname, email, dateOfBirth, gender, degree } =
-        addStudentForm.elements;
+function addStudentSubmitHandler(event) {
+    const form = event.target;
+    const { fullname, email, dateOfBirth, gender, degree } = form.elements;
     setSelectValidity(gender);
     setSelectValidity(degree);
     event.preventDefault();
     event.stopPropagation();
-    addStudentForm.classList.add("was-validated");
-    if (addStudentForm.checkValidity()) {
+    form.classList.add("was-validated");
+    if (form.checkValidity()) {
         const body = {
             fullname: fullname.value,
             email: email.value,
@@ -185,6 +194,7 @@ function addStudentFormSubmitHandler(event) {
     }
 }
 
+// Listeners para validação do campo genero e curso.
 document
     .getElementById("addStudentGender")
     .addEventListener("change", (e) => setSelectValidity(e.target));
@@ -199,3 +209,8 @@ function setSelectValidity(selectElement) {
         selectElement.setCustomValidity("Invalido");
     }
 }
+
+// Validação de email do estudante
+document
+    .getElementById("addStudentEmail")
+    .addEventListener("input", emailValidationHandler);
