@@ -1,5 +1,6 @@
 import "../scss/styles.scss";
 import { Modal } from "bootstrap";
+import { isEmail } from "validator";
 import axios from "axios";
 
 // Define os modais que podem ser manipulados via js
@@ -70,6 +71,17 @@ function loginFormSubmitHandler(event) {
 }
 
 // Listeners do Formulario de Cadastro
+
+// Validação de Email
+const signupEmail = document.getElementById("signupEmail");
+signupEmail.addEventListener("input", emailEventHandler);
+function emailEventHandler(event) {
+    if (isEmail(signupEmail.value)) {
+        signupEmail.setCustomValidity("");
+    } else {
+        signupEmail.setCustomValidity("Inválido");
+    }
+}
 
 // Validação de Password
 const signupPassword = document.getElementById("signupPassword");
