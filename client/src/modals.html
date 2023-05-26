@@ -312,125 +312,125 @@
                 </div>
             </div>
         </div>
-    </body>
-    <!-- Modal de Registro Estudante -->
-    <div
-        class="modal fade"
-        id="addStudentModal"
-        tabindex="-1"
-        aria-labelledby="addStudentModalLabel"
-        aria-hidden="true"
-    >
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-4" id="addStudentModalLabel">
-                        Novo Estudante
-                    </h1>
-                    <button
-                        type="button"
-                        class="btn-close"
-                        data-bs-dismiss="modal"
-                        aria-label="Fechar"
-                    ></button>
-                </div>
-                <div class="modal-body">
-                    <form
-                        id="addStudentForm"
-                        class="needs-validation"
-                        novalidate
-                    >
-                        <div class="mb-3">
-                            <label for="addStudentName" class="form-label"
-                                >Nome:</label
-                            >
-                            <input
-                                type="text"
-                                name="fullname"
-                                class="form-control"
-                                id="addStudentName"
-                                minlength="2"
-                                required
-                            />
-                            <div
-                                id="addStudentNameHelper"
-                                class="invalid-feedback"
-                            >
-                                Nome inválido.
+        <!-- Modal de Registro Estudante -->
+        <div
+            class="modal fade"
+            id="addStudentModal"
+            tabindex="-1"
+            aria-labelledby="addStudentModalLabel"
+            aria-hidden="true"
+        >
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-4" id="addStudentModalLabel">
+                            Novo Estudante
+                        </h1>
+                        <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Fechar"
+                        ></button>
+                    </div>
+                    <div class="modal-body">
+                        <form
+                            id="addStudentForm"
+                            class="needs-validation"
+                            novalidate
+                        >
+                            <div class="mb-3">
+                                <label for="addStudentName" class="form-label"
+                                    >Nome:</label
+                                >
+                                <input
+                                    type="text"
+                                    name="fullname"
+                                    class="form-control"
+                                    id="addStudentName"
+                                    minlength="2"
+                                    required
+                                />
+                                <div
+                                    id="addStudentNameHelper"
+                                    class="invalid-feedback"
+                                >
+                                    Nome inválido.
+                                </div>
                             </div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="addStudentEmail" class="form-label"
-                                >Email:</label
-                            >
-                            <input
-                                type="email"
-                                name="email"
-                                class="form-control"
-                                id="addStudentEmail"
-                                required
-                            />
-                            <div
-                                id="addStudentEmailHelper"
-                                class="invalid-feedback"
-                            >
-                                Email inválido.
+                            <div class="mb-3">
+                                <label for="addStudentEmail" class="form-label"
+                                    >Email:</label
+                                >
+                                <input
+                                    type="email"
+                                    name="email"
+                                    class="form-control"
+                                    id="addStudentEmail"
+                                    required
+                                />
+                                <div
+                                    id="addStudentEmailHelper"
+                                    class="invalid-feedback"
+                                >
+                                    Email inválido.
+                                </div>
                             </div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="addStudentDOB" class="form-label"
-                                >Data de Nascimento:</label
-                            >
-                            <input
-                                type="date"
-                                name="dateOfBirth"
-                                class="form-control"
-                                id="addStudentDOB"
-                                required
-                            />
-                            <div
-                                id="addStudentDOBHelper"
-                                class="invalid-feedback"
-                            >
-                                Data inválida.
+                            <div class="mb-3">
+                                <label for="addStudentDOB" class="form-label"
+                                    >Data de Nascimento:</label
+                                >
+                                <input
+                                    type="date"
+                                    name="dateOfBirth"
+                                    class="form-control"
+                                    id="addStudentDOB"
+                                    required
+                                />
+                                <div
+                                    id="addStudentDOBHelper"
+                                    class="invalid-feedback"
+                                >
+                                    Data inválida.
+                                </div>
                             </div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="addStudentGender" class="form-label"
-                                >Gênero:</label
-                            >
-                            <select
-                                class="form-select"
-                                name="gender"
-                                id="addStudentGender"
-                                required
-                            >
-                                <option disabled selected></option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="addStudentDegree" class="form-label"
-                                >Curso:</label
-                            >
-                            <select
-                                class="form-select"
-                                name="degree"
-                                id="addStudentDegree"
-                                required
-                            >
-                                <option disabled selected></option>
-                            </select>
-                        </div>
-                        <button type="submit" class="btn btn-primary">
-                            Adicionar
-                        </button>
-                        <button type="reset" class="btn btn-secondary">
-                            Limpar formulário
-                        </button>
-                    </form>
+                            <div class="mb-3">
+                                <label for="addStudentGender" class="form-label"
+                                    >Gênero:</label
+                                >
+                                <select
+                                    class="form-select"
+                                    name="gender"
+                                    id="addStudentGender"
+                                    required
+                                >
+                                    <option disabled selected></option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="addStudentDegree" class="form-label"
+                                    >Curso:</label
+                                >
+                                <select
+                                    class="form-select"
+                                    name="degree"
+                                    id="addStudentDegree"
+                                    required
+                                >
+                                    <option disabled selected></option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                Adicionar
+                            </button>
+                            <button type="reset" class="btn btn-secondary">
+                                Limpar formulário
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </body>
     <script type="module" src="./js/modals.js"></script>
 </html>
