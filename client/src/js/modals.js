@@ -64,13 +64,15 @@ function loginSubmitHandler(event) {
     event.preventDefault();
     event.stopPropagation();
     const form = event.target;
-    form.classList.add("was-validated");
+    form.classList.add("was-validated"); // Mostra campos inválidos.
     if (form.checkValidity()) {
         const { email, password } = form.elements;
         const body = { email: email.value, password: password.value };
         axios
             .post(endpoint("login"), body)
             .then((res) => {
+                form.reset();
+                form.classList.remove("was-validated");
                 localStorage.setItem("uniScriptToken", res.data.accessToken);
                 window.location.href = "table.html";
             })
@@ -142,6 +144,8 @@ function signupSubmitHandler(event) {
         axios
             .post(endpoint("register"), body)
             .then((res) => {
+                form.reset();
+                form.classList.remove("was-validated");
                 signupModal.hide();
                 dialogModal.show();
             })
