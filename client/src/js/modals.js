@@ -1,12 +1,12 @@
 import "../scss/styles.scss";
-import * as bootstrap from "bootstrap";
+import { Modal } from "bootstrap";
 import axios from "axios";
 
 // Define os modais que podem ser manipulados via js
-const loginModal = new bootstrap.Modal("#loginModal", {});
-const signupModal = new bootstrap.Modal("#signupModal", {});
-const errModal = new bootstrap.Modal("#errModal", {});
-const dialogModal = new bootstrap.Modal("#dialogModal", {});
+const loginModal = new Modal("#loginModal", {});
+const signupModal = new Modal("#signupModal", {});
+const errModal = new Modal("#errModal", {});
+const dialogModal = new Modal("#dialogModal", {});
 
 // Função que prepara o modal de erros para uma mensagem de erro
 // especifica, "target" é o alvo do retorno para uma nova tentativa
