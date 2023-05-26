@@ -3,6 +3,17 @@ import { Modal } from "bootstrap";
 import { isEmail } from "validator";
 import axios from "axios";
 
+const DEGREES = [
+    "Administração",
+    "Análise e Desenvolvimento de Sistemas",
+    "Ciências Contábeis",
+    "Gestão Financeira",
+    "Inteligência de Negócios",
+    "Marketing Digital",
+];
+
+const GENDERS = ["Feminino", "Masculino", "Outro"];
+
 // Define os modais que podem ser manipulados via js
 const loginModal = new Modal("#loginModal", {});
 const signupModal = new Modal("#signupModal", {});
@@ -134,5 +145,57 @@ function signupFormSubmitHandler(event) {
                 signupModal.hide();
                 showErrorDialog("#signupModal", title, message);
             });
+    }
+}
+
+// Formulário de adicionar estudantes
+
+fillSelect(document.getElementById("addStudentGender"), GENDERS);
+fillSelect(document.getElementById("addStudentDegree"), DEGREES);
+function fillSelect(selectElement, optionsArr) {
+    optionsArr.forEach((option, i) => {
+        const optElement = document.createElement("option");
+        optElement.value = i;
+        optElement.text = option;
+        selectElement.add(optElement);
+    });
+}
+
+// Submit no formulário de cadastro
+const addStudentForm = document.getElementById("addStudentForm");
+addStudentForm.addEventListener("submit", addStudentFormSubmitHandler);
+
+function addStudentFormSubmitHandler(event) {
+    const { fullname, email, dateOfBirth, gender, degree } =
+        addStudentForm.elements;
+    setSelectValidity(gender);
+    setSelectValidity(degree);
+    event.preventDefault();
+    event.stopPropagation();
+    addStudentForm.classList.add("was-validated");
+    if (addStudentForm.checkValidity()) {
+        const body = {
+            fullname: fullname.value,
+            email: email.value,
+            dateOfBirth: dateOfBirth.value,
+            gender: GENDERS[gender.value],
+            degree: DEGREES[degree.value],
+        };
+        console.log(body);
+    }
+}
+
+document
+    .getElementById("addStudentGender")
+    .addEventListener("change", (e) => setSelectValidity(e.target));
+document
+    .getElementById("addStudentDegree")
+    .addEventListener("change", (e) => setSelectValidity(e.target));
+
+function setSelectValidity(selectElement) {
+    if (selectElement.value !== "") {
+        selectElement.setCustomValidity("");
+    } else {
+        selectElement.setCustomValidity("Invalido");
     }
 }
