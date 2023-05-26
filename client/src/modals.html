@@ -28,7 +28,7 @@
         <!-- Botão de Registrar Estudante -->
         <button
             type="button"
-            class="btn btn-outline-success"
+            class="btn btn-primary"
             data-bs-toggle="modal"
             data-bs-target="#addStudentModal"
         >
@@ -42,7 +42,9 @@
             aria-labelledby="loginModalLabel"
             aria-hidden="true"
         >
-            <div class="modal-dialog modal-dialog-centered">
+            <div
+                class="modal-dialog modal-dialog-centered modal-fullscreen-sm-down"
+            >
                 <div class="modal-content">
                     <div class="modal-header">
                         <h1 class="modal-title fs-4" id="loginModalLabel">
@@ -122,7 +124,9 @@
             aria-labelledby="signupModalLabel"
             aria-hidden="true"
         >
-            <div class="modal-dialog modal-dialog-centered">
+            <div
+                class="modal-dialog modal-dialog-centered modal-fullscreen-sm-down"
+            >
                 <div class="modal-content">
                     <div class="modal-header">
                         <h1 class="modal-title fs-4" id="signupModalLabel">
@@ -320,7 +324,9 @@
             aria-labelledby="addStudentModalLabel"
             aria-hidden="true"
         >
-            <div class="modal-dialog modal-dialog-centered">
+            <div
+                class="modal-dialog modal-dialog-centered modal-fullscreen-sm-down"
+            >
                 <div class="modal-content">
                     <div class="modal-header">
                         <h1 class="modal-title fs-4" id="addStudentModalLabel">
@@ -376,36 +382,42 @@
                                     Email inválido.
                                 </div>
                             </div>
-                            <div class="mb-3">
-                                <label for="addStudentDOB" class="form-label"
-                                    >Data de Nascimento:</label
-                                >
-                                <input
-                                    type="date"
-                                    name="dateOfBirth"
-                                    class="form-control"
-                                    id="addStudentDOB"
-                                    required
-                                />
-                                <div
-                                    id="addStudentDOBHelper"
-                                    class="invalid-feedback"
-                                >
-                                    Data inválida.
+                            <div class="row">
+                                <div class="col-lg-7 mb-3">
+                                    <label
+                                        for="addStudentDOB"
+                                        class="form-label"
+                                        >Data de Nascimento:</label
+                                    >
+                                    <input
+                                        type="date"
+                                        name="dateOfBirth"
+                                        class="form-control"
+                                        id="addStudentDOB"
+                                        required
+                                    />
+                                    <div
+                                        id="addStudentDOBHelper"
+                                        class="invalid-feedback"
+                                    >
+                                        Data inválida.
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="mb-3">
-                                <label for="addStudentGender" class="form-label"
-                                    >Gênero:</label
-                                >
-                                <select
-                                    class="form-select"
-                                    name="gender"
-                                    id="addStudentGender"
-                                    required
-                                >
-                                    <option disabled selected></option>
-                                </select>
+                                <div class="col-lg-5 mb-3">
+                                    <label
+                                        for="addStudentGender"
+                                        class="form-label"
+                                        >Gênero:</label
+                                    >
+                                    <select
+                                        class="form-select"
+                                        name="gender"
+                                        id="addStudentGender"
+                                        required
+                                    >
+                                        <option disabled selected></option>
+                                    </select>
+                                </div>
                             </div>
                             <div class="mb-3">
                                 <label for="addStudentDegree" class="form-label"
