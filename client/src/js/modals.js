@@ -170,19 +170,20 @@ function fillSelect(selectElement, optionsArr) {
 }
 
 // Submit no formulário de cadastro
-document
-    .getElementById("addStudentForm")
-    .addEventListener("submit", addStudentSubmitHandler);
+const addStudentForm = document.getElementById("addStudentForm");
+
+addStudentForm.addEventListener("submit", addStudentSubmitHandler);
+addStudentForm.addEventListener("reset", (e) =>
+    e.target.classList.remove("was-validated")
+);
 
 function addStudentSubmitHandler(event) {
     const form = event.target;
-    const { fullname, email, dateOfBirth, gender, degree } = form.elements;
-    setSelectValidity(gender);
-    setSelectValidity(degree);
     event.preventDefault();
     event.stopPropagation();
     form.classList.add("was-validated");
     if (form.checkValidity()) {
+        const { fullname, email, dateOfBirth, gender, degree } = form.elements;
         const body = {
             fullname: fullname.value,
             email: email.value,
@@ -191,22 +192,6 @@ function addStudentSubmitHandler(event) {
             degree: DEGREES[degree.value],
         };
         console.log(body);
-    }
-}
-
-// Listeners para validação do campo genero e curso.
-document
-    .getElementById("addStudentGender")
-    .addEventListener("change", (e) => setSelectValidity(e.target));
-document
-    .getElementById("addStudentDegree")
-    .addEventListener("change", (e) => setSelectValidity(e.target));
-
-function setSelectValidity(selectElement) {
-    if (selectElement.value !== "") {
-        selectElement.setCustomValidity("");
-    } else {
-        selectElement.setCustomValidity("Invalido");
     }
 }
 
