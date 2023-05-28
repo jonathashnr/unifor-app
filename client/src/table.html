@@ -1,36 +1,181 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>table</title>
-    <link rel="stylesheet" href="./css/table.css"/>
-    <script type="module" src="./js/table.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
-</head>
-<body>
-  <table id="table">
-      <thead>
-          <tr>
-            <th id="number">Número</th>
-            <th id="fullname">Nome</th>
-            <th id="email">Email</th>
-            <th id="birthday">Data de Nascimento</th>
-            <th id="gender">Gênero</th>
-            <th id="degree">Curso</th>
-            <th id="edit">Editar</th>
-            <th id="delete">Deletar</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-    </table> 
-    <button type="button" id="buttonLoadMore" onclick=loadMore()>carregar mais</button>
- 
-    <dialog id="dialog">
-        <h3>Deseja realmente excluir?</h3>
-        <button type="button" id="buttonDelete" onclick=deleteItem()>sim</button>
-        <button type="button" id="buttonCancel" onclick=closeConfirmationModal()>cancelar</button>
-    </dialog>
-</body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>table</title>
+        <script type="module" src="./js/table.js"></script>
+        <link rel="stylesheet" href="./css/table.css" />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+            integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        />
+    </head>
+    <body>
+        <!-- Modal de Registro Estudante -->
+        <div
+            class="modal fade"
+            id="addStudentModal"
+            tabindex="-1"
+            aria-labelledby="addStudentModalLabel"
+            aria-hidden="true"
+        >
+            <div
+                class="modal-dialog modal-dialog-centered modal-fullscreen-sm-down"
+            >
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-4" id="addStudentModalLabel">
+                            Novo Estudante
+                        </h1>
+                        <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Fechar"
+                        ></button>
+                    </div>
+                    <div class="modal-body">
+                        <form
+                            id="addStudentForm"
+                            class="needs-validation"
+                            autocomplete="off"
+                            novalidate
+                        >
+                            <div class="mb-3">
+                                <label for="addStudentName" class="form-label"
+                                    >Nome:</label
+                                >
+                                <input
+                                    type="text"
+                                    name="fullname"
+                                    class="form-control"
+                                    id="addStudentName"
+                                    minlength="2"
+                                    required
+                                />
+                                <div
+                                    id="addStudentNameHelper"
+                                    class="invalid-feedback"
+                                >
+                                    Nome inválido.
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="addStudentEmail" class="form-label"
+                                    >Email:</label
+                                >
+                                <input
+                                    type="email"
+                                    name="email"
+                                    class="form-control"
+                                    id="addStudentEmail"
+                                    required
+                                />
+                                <div
+                                    id="addStudentEmailHelper"
+                                    class="invalid-feedback"
+                                >
+                                    Email inválido.
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-7 mb-3">
+                                    <label
+                                        for="addStudentDOB"
+                                        class="form-label"
+                                        >Data de Nascimento:</label
+                                    >
+                                    <input
+                                        type="date"
+                                        name="dateOfBirth"
+                                        class="form-control"
+                                        id="addStudentDOB"
+                                        required
+                                    />
+                                    <div
+                                        id="addStudentDOBHelper"
+                                        class="invalid-feedback"
+                                    >
+                                        Data inválida.
+                                    </div>
+                                </div>
+                                <div class="col-lg-5 mb-3">
+                                    <label
+                                        for="addStudentGender"
+                                        class="form-label"
+                                        >Gênero:</label
+                                    >
+                                    <select
+                                        class="form-select"
+                                        name="gender"
+                                        id="addStudentGender"
+                                        required
+                                    >
+                                        <option disabled selected></option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="addStudentDegree" class="form-label"
+                                    >Curso:</label
+                                >
+                                <select
+                                    class="form-select"
+                                    name="degree"
+                                    id="addStudentDegree"
+                                    required
+                                >
+                                    <option disabled selected></option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                Adicionar
+                            </button>
+                            <button type="reset" class="btn btn-secondary">
+                                Limpar formulário
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="py-5 px-lg-5 px-sm-1">
+            <button
+                type="button"
+                class="btn btn-primary"
+                data-bs-toggle="modal"
+                href="#addStudentModal"
+            >
+                Novo Registro
+            </button>
+            <div class="table-responsive-md">
+                <table id="table" class="table table-sm table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Nome</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Data de Nascimento</th>
+                            <th scope="col">Gênero</th>
+                            <th scope="col">Curso</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <button
+                type="button"
+                id="buttonLoadMore"
+                class="btn btn-primary"
+                onclick="loadMore()"
+            >
+                Carregar Mais
+            </button>
+        </div>
+    </body>
 </html>

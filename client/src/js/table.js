@@ -1,104 +1,234 @@
 import axios from "axios";
+import "../scss/styles.scss";
+import MyDialog from "./myDialog";
+import { Modal } from "bootstrap";
+import { isEmail } from "validator";
 
-const accessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoiam9hb0BvdXRsb29rLmNvbSIsImlkIjoiNjQ2NTQ5MWJjZjI5YTc5MjRmZmUwZjk2In0sImlhdCI6MTY4NDk2MzMzMiwiZXhwIjoxNjg1MDUzMzMyfQ.OJNOV6vWj5PZ2ysPO7eLPnT50y5ugAjALvGa3fKvY6Q"
-const url = `http://localhost:3000/student`   
+const DEGREES = [
+    "Administração",
+    "Análise e Desenvolvimento de Sistemas",
+    "Ciências Contábeis",
+    "Gestão Financeira",
+    "Inteligência de Negócios",
+    "Marketing Digital",
+];
+
+const GENDERS = ["Feminino", "Masculino", "Outro"];
+
+// Define os modais que podem ser manipulados via js
+const addStudentModal = new Modal("#addStudentModal", {});
+
+const accessToken = localStorage.getItem("uniScriptToken");
+const url = "http://localhost:3000/";
 const authAxios = axios.create({
     baseURL: url,
     headers: {
-        Authorization: `Bearer ${accessToken}`
-    }
-})
-let currentData = 20
-let IDItem
+        Authorization: `Bearer ${accessToken}`,
+    },
+});
+let currentData = 20;
+
+function createRow(id, row, name, email, dob, gender, degree) {
+    const tr = document.createElement("tr");
+    const content = `
+                    <th scope="row">${row}</td>
+                    <td>${name}</td>
+                    <td>${email}</td>
+                    <td>${dob}</td>
+                    <td>${gender}</td>
+                    <td>${degree}</td> 
+                    <td>
+                        <i class='fa-solid fa-pen-to-square text-warning' data-id=${id}></i>
+                    </td>  
+                    <td>
+                        <i class='fa-solid fa-trash text-danger' data-id=${id}></i>
+                    </td>
+                    `;
+    tr.insertAdjacentHTML("afterbegin", content);
+    tr.querySelector(".fa-trash").addEventListener(
+        "click",
+        openConfirmationModal
+    );
+    return tr;
+}
 
 function displayStudents() {
-    authAxios.get(url).then((res) => {
-        let data = res.data
+    authAxios
+        .get("student/")
+        .then((res) => {
+            let data = res.data;
 
-        for (let i = 0; i <= data.length; i++) {   
-            const total = i + 1
-
-            let timestamp = new Date(data[i].dateOfBirth)
-            timestamp = new Date(timestamp.getTime() + timestamp.getTimezoneOffset() * 60000)
-            const result = timestamp.toLocaleDateString('pt-BR', {
-                year: 'numeric',
-                month: '2-digit',
-                day: '2-digit' 
-            })
-                                 
-            const content = `           
-                <td class='dataCell'>${total}</td>
-                <td class='dataCell'>${data[i].fullname}</td>
-                <td class='dataCell'>${data[i].email}</td>
-                <td class='dataCell'>${result}</td>
-                <td class='dataCell'>${data[i].gender}</td>
-                <td class='dataCell'>${data[i].degree}</td> 
-                <td class='dataCell'>Editar</td> 
-                <td class='dataCell'>
-                    <i class='fa-solid fa-trash deleteIcon' onclick=openConfirmationModal() id=${data[i]._id}></i>
-                </td> 
-            `
-            document.querySelector('tbody').insertAdjacentHTML('beforeend', content)
-         } 
-    }) 
-    .catch((error) => {
-        if (error.response) {
-            console.log(error.response.data)
-            console.log(error.response.status)
-            console.log(error.response.headers)
-        } else if (error.request) {
-            console.log(error.request)
-        } else {
-            console.log('Error', error.message)
-        }
-        console.log(error.config)
-    })  
-}
-displayStudents()
-
-function loadMore() { 
-    let bodyRow = [...document.querySelectorAll('tbody tr')]
-    let endTable = currentData + 20
-
-    if(endTable >= bodyRow.length) {
-        endTable = bodyRow.length
-        document.getElementById('buttonLoadMore').setAttribute('style', 'display: none')
-    } 
-    
-    for(let i = currentData; i < endTable; i++) {
-        bodyRow[i].style.display = 'table-row'
-    }   
-    currentData = endTable 
-}
-
-function openConfirmationModal() {
-    document.getElementById('dialog').showModal()
-}
-
-function closeConfirmationModal() {
-    document.getElementById('dialog').close()
-}
-
-document.addEventListener('click', (e) => {
-    if(e.target.classList.contains('deleteIcon')) {
-        IDItem = e.target.id            
-    }   
-})
-
-function deleteItem() {
-    authAxios.delete(`${url}/${IDItem}`).then(() => {
-        location.reload();          
-    })
-    .catch((error) => {
-        if (error.response) {
-                console.log(error.response.data)
-                console.log(error.response.status)
-                console.log(error.response.headers)
-            } else if (error.request) {
-                console.log(error.request)
-            } else {
-                console.log('Error', error.message)
+            for (let i = data.length - 1; i >= 0; i--) {
+                const { fullname, email, dateOfBirth, gender, degree, _id } =
+                    data[i];
+                let stringDoB = new Date(dateOfBirth).toLocaleDateString(
+                    "pt-BR",
+                    {
+                        year: "numeric",
+                        month: "2-digit",
+                        day: "2-digit",
+                    }
+                );
+                const tableRow = createRow(
+                    _id,
+                    data.length - i,
+                    fullname,
+                    email,
+                    stringDoB,
+                    gender,
+                    degree
+                );
+                document.querySelector("tbody").appendChild(tableRow);
             }
-            console.log(error.config)
-    })
+        })
+        .catch((error) => {
+            if (error.response) {
+                console.log(error.response.data);
+                console.log(error.response.status);
+                console.log(error.response.headers);
+            } else if (error.request) {
+                console.log(error.request);
+            } else {
+                console.log("Error", error.message);
+            }
+            console.log(error.config);
+        });
+}
+displayStudents();
+
+window.loadMore = loadMore;
+function loadMore() {
+    let bodyRow = [...document.querySelectorAll("tbody tr")];
+    let endTable = currentData + 20;
+
+    if (endTable >= bodyRow.length) {
+        endTable = bodyRow.length;
+        document
+            .getElementById("buttonLoadMore")
+            .setAttribute("style", "display: none");
+    }
+
+    for (let i = currentData; i < endTable; i++) {
+        bodyRow[i].style.display = "table-row";
+    }
+    currentData = endTable;
+}
+
+window.openConfirmationModal = openConfirmationModal;
+function openConfirmationModal(event) {
+    const id = event.target.dataset.id;
+    const confirmationDialog = new MyDialog();
+    confirmationDialog.setTitle("Confirmação", "danger");
+    confirmationDialog.setMessage(
+        "Você tem certeza que deseja excluir esse registro?"
+    );
+    confirmationDialog.setPrimaryButton("Sim", "danger", () => {
+        deleteItem(id);
+        confirmationDialog.hide();
+    });
+    confirmationDialog.setSecondaryButton("Não");
+    confirmationDialog.show();
+}
+
+function deleteItem(IDItem) {
+    authAxios
+        .delete(`student/${IDItem}`)
+        .then(() => {
+            location.reload();
+        })
+        .catch((error) => {
+            if (error.response) {
+                console.log(error.response.data);
+                console.log(error.response.status);
+                console.log(error.response.headers);
+            } else if (error.request) {
+                console.log(error.request);
+            } else {
+                console.log("Error", error.message);
+            }
+            console.log(error.config);
+        });
+}
+
+// Formulário de adicionar estudantes
+
+// Popula selects com as opções de genero e cursos
+fillSelect(document.getElementById("addStudentGender"), GENDERS);
+fillSelect(document.getElementById("addStudentDegree"), DEGREES);
+function fillSelect(selectElement, optionsArr) {
+    optionsArr.forEach((option, i) => {
+        const optElement = document.createElement("option");
+        optElement.value = i;
+        optElement.text = option;
+        selectElement.add(optElement);
+    });
+}
+
+// Submit no formulário de cadastro
+const addStudentForm = document.getElementById("addStudentForm");
+
+addStudentForm.addEventListener("submit", addStudentSubmitHandler);
+addStudentForm.addEventListener("reset", (e) =>
+    e.target.classList.remove("was-validated")
+);
+
+function addStudentSubmitHandler(event) {
+    const form = event.target;
+    event.preventDefault();
+    event.stopPropagation();
+    form.classList.add("was-validated");
+    if (form.checkValidity()) {
+        const { fullname, email, dateOfBirth, gender, degree } = form.elements;
+        const body = {
+            fullname: fullname.value,
+            email: email.value,
+            dateOfBirth: dateOfBirth.value,
+            gender: GENDERS[gender.value],
+            degree: DEGREES[degree.value],
+        };
+        authAxios
+            .post("student/", body)
+            .then((res) => {
+                form.reset();
+                form.classList.remove("was-validated");
+                addStudentModal.hide();
+                const successDialog = new MyDialog(false);
+                successDialog.setTitle("Sucesso!", "success");
+                successDialog.setMessage(
+                    "Novo estudante cadastrado com sucesso! Clique em OK para voltar a tela de administração."
+                );
+                successDialog.setPrimaryButton("OK", "success", () => {
+                    successDialog.hide();
+                    location.reload();
+                });
+                successDialog.show();
+            })
+            .catch((err) => {
+                const title = `${err.response.status} - ${err.response.data.title}`;
+                const message = err.response.data.message;
+                addStudentModal.hide();
+                const errDialog = new MyDialog();
+                errDialog.setTitle(title, "danger");
+                errDialog.setMessage(err.response.data.message);
+                errDialog.setPrimaryButton("Tentar novamente", "danger", () => {
+                    errDialog.hide();
+                    addStudentModal.show();
+                });
+                errDialog.show();
+            });
+    }
+}
+
+// Validação de email do estudante
+document
+    .getElementById("addStudentEmail")
+    .addEventListener("input", emailValidationHandler);
+
+function emailValidationHandler(event) {
+    const email = event.target;
+    if (isEmail(email.value)) {
+        email.setCustomValidity("");
+    } else {
+        email.setCustomValidity("Inválido");
+    }
 }
