@@ -2,7 +2,6 @@ import axios from "axios";
 import "../scss/styles.scss";
 import MyDialog from "./myDialog";
 import { Modal } from "bootstrap";
-import { isEmail } from "validator";
 import Util from "./util";
 
 // Define os modais que podem ser manipulados via js
@@ -10,7 +9,7 @@ const addStudentModal = new Modal("#addStudentModal", {});
 const loginModal = new Modal("#loginModal", {});
 const editStudentModal = new Modal("#editStudentModal", {});
 
-// Define acesso
+// Define acesso via axios
 const accessToken = localStorage.getItem("uniScriptToken");
 const url = "http://localhost:3000/";
 const authAxios = axios.create({
@@ -20,21 +19,41 @@ const authAxios = axios.create({
     },
 });
 
+// Verificação de Acesso e Renderização da tabela.
 window.addEventListener("load", () => {
     authAxios
         .get("student/")
         .then((res) => {
-            displayStudents();
+            displayStudents(res.data);
             document
                 .getElementById("effectiveBody")
                 .classList.remove("visually-hidden");
         })
         .catch((err) => {
-            forcedLogin();
+            loginModal.show();
         });
 });
 
-let currentData = 20;
+function displayStudents(data) {
+    for (let i = 0; i < data.length; i++) {
+        const { fullname, email, dateOfBirth, gender, degree, _id } = data[i];
+        let stringDoB = new Date(dateOfBirth).toLocaleDateString("pt-BR", {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+        });
+        const tableRow = createRow(
+            _id,
+            i + 1,
+            fullname,
+            email,
+            stringDoB,
+            gender,
+            degree
+        );
+        document.querySelector("tbody").appendChild(tableRow);
+    }
+}
 
 function createRow(id, row, name, email, dob, gender, degree) {
     const tr = document.createElement("tr");
@@ -46,17 +65,14 @@ function createRow(id, row, name, email, dob, gender, degree) {
                     <td>${gender}</td>
                     <td>${degree}</td> 
                     <td>
-                        <i class='fa-solid fa-pen-to-square text-warning' data-id=${id}></i>
+                        <i class='fa-solid fa-pen-to-square text-warning' data-id="${id}"></i>
                     </td>  
                     <td>
-                        <i class='fa-solid fa-trash text-danger' data-id=${id} data-name=${name}></i>
+                        <i class='fa-solid fa-trash text-danger' data-id="${id}" data-name="${name}"></i>
                     </td>
                     `;
     tr.insertAdjacentHTML("afterbegin", content);
-    tr.querySelector(".fa-trash").addEventListener(
-        "click",
-        openConfirmationModal
-    );
+    tr.querySelector(".fa-trash").addEventListener("click", openDeleteDialog);
     tr.querySelector(".fa-pen-to-square").addEventListener(
         "click",
         openEditDialog
@@ -64,49 +80,8 @@ function createRow(id, row, name, email, dob, gender, degree) {
     return tr;
 }
 
-function displayStudents() {
-    authAxios
-        .get("student/")
-        .then((res) => {
-            let data = res.data;
-
-            for (let i = data.length - 1; i >= 0; i--) {
-                const { fullname, email, dateOfBirth, gender, degree, _id } =
-                    data[i];
-                let stringDoB = new Date(dateOfBirth).toLocaleDateString(
-                    "pt-BR",
-                    {
-                        year: "numeric",
-                        month: "2-digit",
-                        day: "2-digit",
-                    }
-                );
-                const tableRow = createRow(
-                    _id,
-                    data.length - i,
-                    fullname,
-                    email,
-                    stringDoB,
-                    gender,
-                    degree
-                );
-                document.querySelector("tbody").appendChild(tableRow);
-            }
-        })
-        .catch((error) => {
-            if (error.response) {
-                console.log(error.response.data);
-                console.log(error.response.status);
-                console.log(error.response.headers);
-            } else if (error.request) {
-                console.log(error.request);
-            } else {
-                console.log("Error", error.message);
-            }
-            console.log(error.config);
-        });
-}
-
+// Controle do "Carregar Mais"
+let currentData = 20;
 window.loadMore = loadMore;
 function loadMore() {
     let bodyRow = [...document.querySelectorAll("tbody tr")];
@@ -125,14 +100,14 @@ function loadMore() {
     currentData = endTable;
 }
 
-window.openConfirmationModal = openConfirmationModal;
-function openConfirmationModal(event) {
+// Confirmação e Exclusão de registros
+function openDeleteDialog(event) {
     const id = event.target.dataset.id;
     const name = event.target.dataset.name;
     const confirmationDialog = new MyDialog();
     confirmationDialog.setTitle("Confirmação", "danger");
     confirmationDialog.setMessage(
-        `Você tem certeza que deseja excluir o registro de ${name.toUpperCase()}`
+        `Você tem certeza que deseja excluir o registro de ${name.toUpperCase()}.`
     );
     confirmationDialog.setPrimaryButton("Sim", "danger", () => {
         deleteItem(id);
@@ -151,11 +126,11 @@ function deleteItem(id) {
         .catch((err) => {
             if (err.response) {
                 if (err.response.status == 403) {
-                    forcedLogin();
+                    loginModal.show();
                 } else {
                     Util.genericErrorDialog(
-                        `${response.status} - ${response.data.title}`,
-                        response.data.message
+                        `${err.response.status} - ${err.response.data.title}`,
+                        err.response.data.message
                     );
                 }
             } else {
@@ -225,11 +200,11 @@ function addStudentSubmitHandler(event) {
                 addStudentModal.hide();
                 if (err.response) {
                     if (err.response.status == 403) {
-                        forcedLogin();
+                        loginModal.show();
                     } else {
                         Util.genericErrorDialog(
-                            `${response.status} - ${response.data.title}`,
-                            response.data.message,
+                            `${err.response.status} - ${err.response.data.title}`,
+                            err.response.data.message,
                             addStudentModal
                         );
                     }
@@ -247,18 +222,12 @@ function addStudentSubmitHandler(event) {
 // Validação de email do estudante
 document
     .getElementById("addStudentEmail")
-    .addEventListener("input", emailValidationHandler);
-
-function emailValidationHandler(event) {
-    const email = event.target;
-    if (isEmail(email.value)) {
-        email.setCustomValidity("");
-    } else {
-        email.setCustomValidity("Inválido");
-    }
-}
+    .addEventListener("input", Util.emailValidationHandler);
 
 // Formulário EDITAR estudantes
+
+// Abre Dialog de edição e busca valores
+// atualizados no servidor.
 function openEditDialog(event) {
     const id = event.target.dataset.id;
     authAxios
@@ -270,11 +239,11 @@ function openEditDialog(event) {
         .catch((err) => {
             if (err.response) {
                 if (err.response.status == 403) {
-                    forcedLogin();
+                    loginModal.show();
                 } else {
                     Util.genericErrorDialog(
-                        `${response.status} - ${response.data.title}`,
-                        response.data.message
+                        `${err.response.status} - ${err.response.data.title}`,
+                        err.response.data.message
                     );
                 }
             } else {
@@ -286,6 +255,8 @@ function openEditDialog(event) {
             }
         });
 }
+
+// Popula o formulario de edição com os valores atuais
 function populateEditDialog(studentData) {
     const {
         _id,
@@ -310,11 +281,12 @@ function populateEditDialog(studentData) {
     document.getElementById("editStudentGender").value = gender;
     document.getElementById("editStudentDegree").value = degree;
 }
+
 // Popula selects com as opções de genero e cursos
 fillSelect(document.getElementById("editStudentGender"), Util.GENDERS);
 fillSelect(document.getElementById("editStudentDegree"), Util.DEGREES);
 
-// Submit no formulário de cadastro
+// Submit no formulário de edição de estudante
 const editStudentForm = document.getElementById("editStudentForm");
 
 editStudentForm.addEventListener("submit", editStudentSubmitHandler);
@@ -358,11 +330,11 @@ function editStudentSubmitHandler(event) {
                 editStudentModal.hide();
                 if (err.response) {
                     if (err.response.status == 403) {
-                        forcedLogin();
+                        loginModal.show();
                     } else {
                         Util.genericErrorDialog(
-                            `${response.status} - ${response.data.title}`,
-                            response.data.message,
+                            `${err.response.status} - ${err.response.data.title}`,
+                            err.response.data.message,
                             editStudentModal
                         );
                     }
@@ -380,11 +352,7 @@ function editStudentSubmitHandler(event) {
 // Validação de email do estudante
 document
     .getElementById("editStudentEmail")
-    .addEventListener("input", emailValidationHandler);
-
-function forcedLogin() {
-    loginModal.show();
-}
+    .addEventListener("input", Util.emailValidationHandler);
 
 // Formulário de Login
 

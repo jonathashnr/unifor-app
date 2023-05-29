@@ -1,50 +1,15 @@
 import "../scss/styles.scss";
 import { Modal } from "bootstrap";
 import MyDialog from "./myDialog";
-import { isEmail } from "validator";
+import Util from "./util";
 import axios from "axios";
-
-const DEGREES = [
-    "Administração",
-    "Análise e Desenvolvimento de Sistemas",
-    "Ciências Contábeis",
-    "Gestão Financeira",
-    "Inteligência de Negócios",
-    "Marketing Digital",
-];
-
-const GENDERS = ["Feminino", "Masculino", "Outro"];
 
 // Define os modais que podem ser manipulados via js
 const loginModal = new Modal("#loginModal", {});
 const signupModal = new Modal("#signupModal", {});
 
-
 // Helper para URI
 const endpoint = (route) => `http://localhost:3000/admin/${route}`;
-
-// Validação da força da senha
-function passwordStrenghtCheck(password) {
-    let isStrong = false;
-    let errMessage = "";
-    if (!password) {
-        errMessage = "A senha não pode estar vazia.";
-    } else if (!/[@$!%*#?&]/.test(password)) {
-        errMessage =
-            "A senha deve conter pelo menos um símbolo: @ $ ! % * # ? &.";
-    } else if (!/[0-9]/.test(password)) {
-        errMessage = "A deve conter pelo menos um número.";
-    } else if (!/[A-Z]/.test(password)) {
-        errMessage = "A deve conter pelo menos uma letra maiúscula.";
-    } else if (!/[a-z]/.test(password)) {
-        errMessage = "A deve conter pelo menos uma letra minúscula.";
-    } else if (password.length < 8) {
-        errMessage = "A deve conter pelo menos 8 caracteres.";
-    } else {
-        isStrong = true;
-    }
-    return [isStrong, errMessage];
-}
 
 // Listeners do Formulario de Login
 document
@@ -68,17 +33,20 @@ function loginSubmitHandler(event) {
                 window.location.href = "table.html";
             })
             .catch((err) => {
-                const title = `${err.response.status} - ${err.response.data.title}`;
-                const message = err.response.data.message;
                 loginModal.hide();
-                const errDialog = new MyDialog();
-                errDialog.setTitle(title, "danger");
-                errDialog.setMessage(err.response.data.message);
-                errDialog.setPrimaryButton("Tentar novamente", "danger", () => {
-                    errDialog.hide();
-                    loginModal.show();
-                });
-                errDialog.show();
+                if (err.response) {
+                    Util.genericErrorDialog(
+                        `${err.response.status} - ${err.response.data.title}`,
+                        err.response.data.message,
+                        loginModal
+                    );
+                } else {
+                    console.error("Erro: ", err);
+                    Util.genericErrorDialog(
+                        "Erro Inesperado",
+                        "Aconteceu um erro inesperado, cheque o console para detalhes"
+                    );
+                }
             });
     }
 }
@@ -88,16 +56,7 @@ function loginSubmitHandler(event) {
 // Validação de Email
 document
     .getElementById("signupEmail")
-    .addEventListener("input", emailValidationHandler);
-
-function emailValidationHandler(event) {
-    const email = event.target;
-    if (isEmail(email.value)) {
-        email.setCustomValidity("");
-    } else {
-        email.setCustomValidity("Inválido");
-    }
-}
+    .addEventListener("input", Util.emailValidationHandler);
 
 // Validação de Password
 const signupPassword = document.getElementById("signupPassword");
@@ -107,7 +66,9 @@ signupPassword.addEventListener("input", passValidationHandler);
 signupConfirmPassword.addEventListener("input", passValidationHandler);
 
 function passValidationHandler(event) {
-    const [isStrong, errMessage] = passwordStrenghtCheck(signupPassword.value);
+    const [isStrong, errMessage] = Util.passwordStrenghtCheck(
+        signupPassword.value
+    );
     if (signupPassword.value === signupConfirmPassword.value) {
         signupConfirmPassword.setCustomValidity("");
     } else {
@@ -157,21 +118,28 @@ function signupSubmitHandler(event) {
                 successDialog.show();
             })
             .catch((err) => {
-                event.stopPropagation();
-                const title = `${err.response.status} - ${err.response.data.title}`;
-                const message = err.response.data.message;
                 signupModal.hide();
-                const errDialog = new MyDialog();
-                errDialog.setTitle(title, "danger");
-                errDialog.setMessage(err.response.data.message);
-                errDialog.setPrimaryButton("Tentar novamente", "danger", () => {
-                    errDialog.hide();
-                    signupModal.show();
-                });
-                errDialog.show();
+                if (err.response) {
+                    Util.genericErrorDialog(
+                        `${err.response.status} - ${err.response.data.title}`,
+                        err.response.data.message,
+                        signupModal
+                    );
+                } else {
+                    console.error("Erro: ", err);
+                    Util.genericErrorDialog(
+                        "Erro Inesperado",
+                        "Aconteceu um erro inesperado, cheque o console para detalhes"
+                    );
+                }
             });
     }
 }
+
+//
+// main.js anterior
+//
+
 /*  abre e fecha o menu quando clicar no icone: hamburguer e x */
 const nav = document.querySelector("#header nav");
 const toggle = document.querySelectorAll("nav .toggle");

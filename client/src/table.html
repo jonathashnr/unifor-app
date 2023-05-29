@@ -167,13 +167,13 @@
                             aria-label="Fechar"
                         ></button>
                     </div>
-                    <form
-                        id="editStudentForm"
-                        class="needs-validation"
-                        autocomplete="off"
-                        novalidate
-                    >
-                        <div class="modal-header">
+                    <div class="modal-body">
+                        <form
+                            id="editStudentForm"
+                            class="needs-validation"
+                            autocomplete="off"
+                            novalidate
+                        >
                             <small>
                                 <div class="row mb-0">
                                     <label
@@ -225,8 +225,7 @@
                                     </div>
                                 </div>
                             </small>
-                        </div>
-                        <div class="modal-body">
+                            <hr />
                             <div class="mb-3">
                                 <label for="editStudentName" class="form-label"
                                     >Nome:</label
@@ -322,8 +321,8 @@
                             <button type="reset" class="btn btn-secondary">
                                 Limpar formulário
                             </button>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -415,15 +414,6 @@
                 href="#addStudentModal"
             >
                 Novo Registro
-            </button>
-            <!-- Botão de Edição de Registro -->
-            <button
-                type="button"
-                class="btn btn-warning"
-                data-bs-toggle="modal"
-                href="#loginModal"
-            >
-                Modal de Edição
             </button>
             <!-- Tabela -->
             <div class="table-responsive-md">
