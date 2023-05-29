@@ -144,7 +144,270 @@
                 </div>
             </div>
         </div>
-        <div class="py-5 px-lg-5 px-sm-1">
+        <!-- Modal de Edição de Estudante -->
+        <div
+            class="modal fade"
+            id="editStudentModal"
+            tabindex="-1"
+            aria-labelledby="editStudentModalLabel"
+            aria-hidden="true"
+        >
+            <div
+                class="modal-dialog modal-dialog-centered modal-fullscreen-sm-down"
+            >
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-4" id="editStudentModalLabel">
+                            Edição de Registro
+                        </h1>
+                        <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Fechar"
+                        ></button>
+                    </div>
+                    <form
+                        id="editStudentForm"
+                        class="needs-validation"
+                        autocomplete="off"
+                        novalidate
+                    >
+                        <div class="modal-header">
+                            <small>
+                                <div class="row mb-0">
+                                    <label
+                                        for="editStudentId"
+                                        class="col-sm-4 col-form-label"
+                                        >Id:</label
+                                    >
+                                    <div class="col-sm-8">
+                                        <input
+                                            type="text"
+                                            readonly
+                                            class="form-control-plaintext"
+                                            name="id"
+                                            id="editStudentId"
+                                            value=""
+                                        />
+                                    </div>
+                                </div>
+                                <div class="row mb-0">
+                                    <label
+                                        for="editStudentCreatedAt"
+                                        class="col-sm-4 col-form-label"
+                                        >Criado em:</label
+                                    >
+                                    <div class="col-sm-8">
+                                        <input
+                                            type="text"
+                                            readonly
+                                            class="form-control-plaintext"
+                                            id="editStudentCreatedAt"
+                                            value=""
+                                        />
+                                    </div>
+                                </div>
+                                <div class="row mb-0">
+                                    <label
+                                        for="editStudentUpdatedAt"
+                                        class="col-sm-4 col-form-label"
+                                        >Editado em:</label
+                                    >
+                                    <div class="col-sm-8">
+                                        <input
+                                            type="text"
+                                            readonly
+                                            class="form-control-plaintext"
+                                            id="editStudentUpdatedAt"
+                                            value=""
+                                        />
+                                    </div>
+                                </div>
+                            </small>
+                        </div>
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="editStudentName" class="form-label"
+                                    >Nome:</label
+                                >
+                                <input
+                                    type="text"
+                                    name="fullname"
+                                    class="form-control"
+                                    id="editStudentName"
+                                    minlength="2"
+                                    required
+                                />
+                                <div
+                                    id="editStudentNameHelper"
+                                    class="invalid-feedback"
+                                >
+                                    Nome inválido.
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="editStudentEmail" class="form-label"
+                                    >Email:</label
+                                >
+                                <input
+                                    type="email"
+                                    name="email"
+                                    class="form-control"
+                                    id="editStudentEmail"
+                                    required
+                                />
+                                <div
+                                    id="editStudentEmailHelper"
+                                    class="invalid-feedback"
+                                >
+                                    Email inválido.
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-7 mb-3">
+                                    <label
+                                        for="editStudentDOB"
+                                        class="form-label"
+                                        >Data de Nascimento:</label
+                                    >
+                                    <input
+                                        type="date"
+                                        name="dateOfBirth"
+                                        class="form-control"
+                                        id="editStudentDOB"
+                                        required
+                                    />
+                                    <div
+                                        id="editStudentDOBHelper"
+                                        class="invalid-feedback"
+                                    >
+                                        Data inválida.
+                                    </div>
+                                </div>
+                                <div class="col-lg-5 mb-3">
+                                    <label
+                                        for="editStudentGender"
+                                        class="form-label"
+                                        >Gênero:</label
+                                    >
+                                    <select
+                                        class="form-select"
+                                        name="gender"
+                                        id="editStudentGender"
+                                        required
+                                    >
+                                        <option disabled selected></option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label
+                                    for="editStudentDegree"
+                                    class="form-label"
+                                    >Curso:</label
+                                >
+                                <select
+                                    class="form-select"
+                                    name="degree"
+                                    id="editStudentDegree"
+                                    required
+                                >
+                                    <option disabled selected></option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-warning">
+                                Editar
+                            </button>
+                            <button type="reset" class="btn btn-secondary">
+                                Limpar formulário
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Modal de Login -->
+        <div
+            class="modal fade"
+            id="loginModal"
+            tabindex="-1"
+            aria-labelledby="loginModalLabel"
+            aria-hidden="true"
+            data-bs-backdrop="static"
+            data-bs-keyboard="false"
+        >
+            <div
+                class="modal-dialog modal-dialog-centered modal-fullscreen-sm-down"
+            >
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div>
+                            <h1
+                                class="modal-title fs-4 text-danger"
+                                id="loginModalLabel"
+                            >
+                                403 - Requisição/Acesso Negado
+                            </h1>
+                            <p class="text-danger">
+                                Para continuar nessa página informe suas
+                                credenciais.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="modal-body">
+                        <form
+                            id="loginForm"
+                            class="needs-validation"
+                            novalidate
+                        >
+                            <div class="mb-3">
+                                <label for="loginEmail" class="form-label"
+                                    >Email:</label
+                                >
+                                <input
+                                    type="email"
+                                    name="email"
+                                    class="form-control"
+                                    id="loginEmail"
+                                    required
+                                />
+                                <div class="invalid-feedback">
+                                    Email inválido.
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="loginPassword" class="form-label"
+                                    >Senha:</label
+                                >
+                                <input
+                                    type="password"
+                                    name="password"
+                                    class="form-control"
+                                    id="loginPassword"
+                                    required
+                                />
+                                <div class="invalid-feedback">
+                                    A senha não pode estar vazia.
+                                </div>
+                            </div>
+                            <button
+                                type="submit"
+                                class="btn btn-danger"
+                                form="loginForm"
+                            >
+                                Entrar
+                            </button>
+                            <a class="btn btn-secondary" href="index.html">
+                                Voltar
+                            </a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="effectiveBody" class="py-5 px-lg-5 px-sm-1 visually-hidden">
+            <!-- Botão de Novo Registro -->
             <button
                 type="button"
                 class="btn btn-primary"
@@ -153,6 +416,16 @@
             >
                 Novo Registro
             </button>
+            <!-- Botão de Edição de Registro -->
+            <button
+                type="button"
+                class="btn btn-warning"
+                data-bs-toggle="modal"
+                href="#loginModal"
+            >
+                Modal de Edição
+            </button>
+            <!-- Tabela -->
             <div class="table-responsive-md">
                 <table id="table" class="table table-sm table-striped">
                     <thead>
@@ -168,6 +441,7 @@
                     <tbody></tbody>
                 </table>
             </div>
+            <!-- Botão de Carregar Mais -->
             <button
                 type="button"
                 id="buttonLoadMore"
