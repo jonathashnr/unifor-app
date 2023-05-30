@@ -234,6 +234,8 @@ function openEditDialog(event) {
         .get(`student/${id}`)
         .then((res) => {
             populateEditDialog(res.data);
+            document.getElementById("editStudentForm").dataset.student =
+                JSON.stringify(res.data);
             editStudentModal.show();
         })
         .catch((err) => {
@@ -255,6 +257,13 @@ function openEditDialog(event) {
             }
         });
 }
+
+// Listener do botão Reset do Formulário de edição
+document.getElementById("editStudentReset").addEventListener("click", () => {
+    const JSONdata = document.getElementById("editStudentForm").dataset.student;
+    const studentData = JSON.parse(JSONdata);
+    populateEditDialog(studentData);
+});
 
 // Popula o formulario de edição com os valores atuais
 function populateEditDialog(studentData) {
@@ -313,6 +322,7 @@ function editStudentSubmitHandler(event) {
             .put(`student/${id.value}`, body)
             .then((res) => {
                 form.reset();
+                form.dataset.student = "";
                 form.classList.remove("was-validated");
                 editStudentModal.hide();
                 const successDialog = new MyDialog(false);
