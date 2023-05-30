@@ -37,7 +37,9 @@ const verifiedStudent = async (id) => {
 //
 const getAllStudents = asyncHandler(async (req, res) => {
     // Limitando a 300 estudantes
-    const allStudents = await Students.find().limit(300);
+    const allStudents = await Students.find()
+        .sort({ updatedAt: -1 })
+        .limit(300);
     res.json(allStudents);
 });
 
@@ -71,6 +73,11 @@ const postStudent = asyncHandler(async (req, res) => {
 const putStudent = asyncHandler(async (req, res) => {
     const student = await verifiedStudent(req.params.id);
     const { fullname, email, dateOfBirth, gender, degree } = req.body;
+    // Verifica se um outro estudante já tem esse email cadastrado
+    const studentByEmail = await Students.findOne({ email });
+    if (studentByEmail && studentByEmail.id !== student.id) {
+        throw new BadRequestError("Email já está em uso por outro estudante.");
+    }
     const validFields = { fullname, email, dateOfBirth, gender, degree };
     // Garante que só os campos não nulos são adicionados ao registro do estudante
     Object.keys(validFields).forEach((key) => {
