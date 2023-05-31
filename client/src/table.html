@@ -7,6 +7,7 @@
         <title>table</title>
         <script type="module" src="./js/table.js"></script>
         <link rel="stylesheet" href="./css/table.css" />
+        <link rel="stylesheet" href="./css/style.css" />
         <link
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -402,7 +403,7 @@
                             >
                                 Entrar
                             </button>
-                            <a class="btn btn-secondary" href="index.html">
+                            <a class="btn btn-secondary" href="./index.html">
                                 Voltar
                             </a>
                         </form>
@@ -410,16 +411,51 @@
                 </div>
             </div>
         </div>
+
+        <!-- HEADER -->
+        <header id="header">
+            <nav class="container">
+                <a class="logo" href="./index.html" style="text-decoration: none"
+                    >uni<span>Script</span>.</a
+                >
+                <!-- menu -->
+                <div class="menu">
+                    <ul class="grid">
+                        <li><a class="title" href="./index.html">Início</a></li>
+                        <li><a class="title" href="./index.html">Sobre</a></li>
+                        <li><a class="title" href="./index.html">Serviços</a></li>
+                        <li><a class="title" href="./index.html">Contato</a></li>
+                        <li>
+                            <a
+                                id="btn"
+                                class="title button"
+                                data-bs-toggle="modal"
+                                href="#loginModal"
+                            >
+                                Entrar
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /menu -->
+                <div class="toggle icon-menu"></div>
+                <div class="toggle icon-close"></div>
+            </nav>
+        </header>
+        <!-- HEADER -->
+
         <div id="effectiveBody" class="py-5 px-lg-5 px-sm-1 visually-hidden">
             <!-- Botão de Novo Registro -->
             <button
                 type="button"
-                class="btn btn-primary"
+                class="btn"
                 data-bs-toggle="modal"
                 href="#addStudentModal"
+                style="background-color: var(--base-color);"
             >
                 Novo Registro
             </button>
+
             <!-- Tabela -->
             <div class="table-responsive-md">
                 <table id="table" class="table table-sm table-striped">
@@ -434,17 +470,35 @@
                         </tr>
                     </thead>
                     <tbody></tbody>
-                </table>
+                </table>    
             </div>
+            
             <!-- Botão de Carregar Mais -->
-            <button
-                type="button"
-                id="buttonLoadMore"
-                class="btn btn-primary"
-                onclick="loadMore()"
-            >
-                Carregar Mais
-            </button>
+            <div id="divLoadMore">
+                <button
+                    type="button"
+                    id="buttonLoadMore"
+                    class="btn"
+                    onclick="loadMore()"
+                    style="background-color: var(--base-color);"
+                >
+                    Carregar Mais
+                </button>
+            </div>
         </div>
+
+        <footer class="section">
+            <div class="container grid">
+                <div class="brand">
+                    <a
+                        class="logo logo-alt"
+                        href="./index.html"
+                        style="text-decoration: none"
+                        >uni<span>Script</span>.</a
+                    >
+                    <p>©2021 uniScript.</p>
+                </div>
+            </div>
+        </footer>
     </body>
 </html>
