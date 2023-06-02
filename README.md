@@ -8,16 +8,16 @@
 
 ---
 
-### Guia de instalação/execução do projeto
+## Guia de instalação/execução do projeto
 
-#### 1. Fazendo download do repositório
+### 1. Fazendo download do repositório
 
 Clone o repositório com:
 
 ```
 git clone https://github.com/jonathashnr/unifor-app.git
 ```
-#### 2. Configurando o servidor
+### 2. Configurando o servidor
 O repositório tem dois projetos separados (client e server) que tem dependências que devem ser instaladas usando npm. Além disso o servidor precisa ter suas variáveis de ambiente carregadas, para começar vamos navegar para dentro do diretório  `/server` e instalar as dependências do servidor:
 ```
 npm install
@@ -32,7 +32,7 @@ npm start
 ```
 O servidor deve estar escutando em _http://localhost:3000/_
 
-#### 3. Executando o Cliente
+### 3. Executando o Cliente
 Uma vez que o servidor esteja funcionando, abra um novo terminal e navegue até o diretório `/client` do repositório e instale as dependências do cliente com:
 ```
 npm install
@@ -44,15 +44,15 @@ npm start
 Isso deve inicializar o projeto, que pode ser acessado (por padrão) em _http://localhost:8080/_
 
 ---
-### Modelagem da aplicação
+## Modelagem da aplicação
 
 O app consiste em um _client_ que funciona de front-end e um _server_ que é uma API Rest. Através da API é possível registrar e logar um **administrador** que tem permissão para fazer CRUD completo no registro dos **estudantes**. O fluxo de uso do app deve ser simples: Chega na landing page, clica no link para registrar um novo administrador, faz log on com a conta de administrador recem criada e com isso tem acesso a "Tela de Administração", onde é possível ver uma lista dos estudantes com gráficos baseados nessa lista, além de poder criar novos registros e deletar/editar os já existentes.
 
 ---
 
-### Documentação da API
+## Documentação da API
 
-#### Coleção admins
+### Coleção admins
 
 -   Schema:
     -   username (String, _required, unique_)
@@ -63,7 +63,7 @@ O app consiste em um _client_ que funciona de front-end e um _server_ que é uma
     -   `/admin/login/` - (POST, _public_) - loga com um administrador
     -   `/admin/current/` - (GET, _private_) - retorna info básica sobre o administrador logado.
 
-#### Coleção students
+### Coleção students
 
 -   Schema:
     -   fullname (String, _required_)
