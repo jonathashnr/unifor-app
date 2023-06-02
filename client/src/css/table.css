@@ -1,9 +1,10 @@
-/* body {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-} */
+#effectiveBody {
+    margin-top: 60px;
+}
+
+.table-responsive-md {
+    padding: 20px 0 10px 0;
+}
 
 tbody tr {
     display: none;
@@ -16,3 +17,7 @@ tbody tr:nth-child(n + 1):nth-child(-n + 20) {
 i {
     cursor: pointer;
 }
+
+#divLoadMore {
+    text-align: center; 
+ }
