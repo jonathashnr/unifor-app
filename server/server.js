@@ -4,6 +4,7 @@ const studentRoutes = require("./routes/studentRoutes.js");
 const adminRoutes = require("./routes/adminRoutes.js");
 const errorHandler = require("./middlewares/errorHandler.js");
 const connectDb = require("./config/dbConnection.js");
+const { NotFoundError } = require("./middlewares/httpErrors.js");
 
 // Garante que as variaveis de ambiente foram carregadas.
 require("dotenv").config();
@@ -27,8 +28,9 @@ app.use(cors());
 app.use("/student", studentRoutes);
 app.use("/admin", adminRoutes);
 
-app.get("/", (req, res) => res.send("Api ativa"));
+app.get("/", (req, res) => res.send("Api está funcionando."));
 
+app.use("*", (req, res, next) => next(new NotFoundError("Rota inválida")));
 app.use(errorHandler);
 
 const port = process.env.PORT;
